@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import TaskForm from '@/components/TaskForm';
 import { addTask } from '@/store/slices/tasksSlice';
@@ -17,17 +17,10 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const TaskFormContainer: React.FC<PropsFromRedux> = ({ addTask }) => {
-  const handleSubmit = useCallback(
-    (title: string): void => {
-      addTask(title);
-    },
-    [addTask]
-  );
-
   return (
     <TaskForm
       mode="create"
-      onSubmit={handleSubmit}
+      onSubmit={addTask}
       submitLabel="Add Task"
       placeholder="What needs to be done?"
     />

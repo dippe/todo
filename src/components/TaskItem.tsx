@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { TaskId } from '@/types/task';
@@ -20,18 +20,6 @@ export const TaskItem: React.FC<TaskItemProps> = ({
   onDelete,
   onEdit,
 }) => {
-  const handleToggle = useCallback((): void => {
-    onToggle(id);
-  }, [id, onToggle]);
-
-  const handleDelete = useCallback((): void => {
-    onDelete(id);
-  }, [id, onDelete]);
-
-  const handleEdit = useCallback((): void => {
-    onEdit(id);
-  }, [id, onEdit]);
-
   return (
     <li
       className="flex items-center gap-3 p-3 border-b border-border last:border-b-0"
@@ -40,7 +28,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
       <Checkbox
         id={`task-${id}`}
         checked={completed}
-        onCheckedChange={handleToggle}
+        onCheckedChange={() => onToggle(id)}
         aria-label={`Mark ${title} as ${completed ? 'incomplete' : 'complete'}`}
         className="min-h-[44px] min-w-[44px]"
       />
@@ -56,7 +44,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
         <Button
           variant="ghost"
           size="sm"
-          onClick={handleEdit}
+          onClick={() => onEdit(id)}
           aria-label={`Edit ${title}`}
           className="min-h-[44px] min-w-[44px]"
         >
@@ -65,7 +53,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
         <Button
           variant="ghost"
           size="sm"
-          onClick={handleDelete}
+          onClick={() => onDelete(id)}
           aria-label={`Delete ${title}`}
           className="min-h-[44px] min-w-[44px] text-destructive hover:text-destructive"
         >

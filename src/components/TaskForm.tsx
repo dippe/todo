@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -19,26 +19,22 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   submitLabel,
   placeholder = 'What needs to be done?',
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState(initialValue);
 
-  const handleSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>): void => {
-      event.preventDefault();
-      const title = inputRef.current?.value.trim() ?? '';
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    const title = value.trim();
 
-      if (title.length === 0) {
-        return;
-      }
+    if (title.length === 0) {
+      return;
+    }
 
-      onSubmit(title);
+    onSubmit(title);
 
-      if (mode === 'create' && inputRef.current) {
-        inputRef.current.value = '';
-        inputRef.current.focus();
-      }
-    },
-    [mode, onSubmit]
-  );
+    if (mode === 'create') {
+      setValue('');
+    }
+  };
 
   return (
     <form
@@ -47,9 +43,9 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       aria-label={mode === 'create' ? 'Add new task' : 'Edit task'}
     >
       <Input
-        ref={inputRef}
         type="text"
-        defaultValue={initialValue}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
         aria-label={mode === 'create' ? 'Add task' : 'Edit task title'}
         className="flex-1 min-h-[44px]"
