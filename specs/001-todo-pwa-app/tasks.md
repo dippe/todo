@@ -25,30 +25,30 @@
 
 **Purpose**: Project initialization and basic structure per quickstart.md
 
-- [ ] T001 Initialize Vite + React + TypeScript project with create vite@latest
-- [ ] T002 [P] Install core dependencies: react-redux @reduxjs/toolkit
-- [ ] T003 [P] Install UI dependencies: shadcn/ui tailwindcss postcss autoprefixer
-- [ ] T004 [P] Install dev dependencies: @types/react-redux typescript
-- [ ] T005 Configure TypeScript strict mode in tsconfig.json per research.md section 6
-- [ ] T006 [P] Configure ESLint with functional programming rules in .eslintrc.cjs
-- [ ] T007 [P] Configure Prettier formatting in .prettierrc
-- [ ] T008 [P] Initialize Tailwind CSS with npx tailwindcss init -p
-- [ ] T009 Configure Tailwind responsive breakpoints in tailwind.config.js (768px mobile/desktop)
-- [ ] T010 [P] Install Jest dependencies: jest @testing-library/react @testing-library/jest-dom
-- [ ] T011 [P] Install testing utilities: @testing-library/user-event @types/jest jest-environment-jsdom ts-jest
-- [ ] T012 [P] Initialize Playwright for E2E tests with npm init playwright@latest
-- [ ] T013 Configure Jest in jest.config.js with 90% coverage threshold
-- [ ] T014 Create test setup file in src/setupTests.ts
+- [x] T001 Initialize Vite + React + TypeScript project with create vite@latest
+- [x] T002 [P] Install core dependencies: react-redux @reduxjs/toolkit
+- [x] T003 [P] Install UI dependencies: shadcn/ui tailwindcss postcss autoprefixer
+- [x] T004 [P] Install dev dependencies: @types/react-redux typescript
+- [x] T005 Configure TypeScript strict mode in tsconfig.json per research.md section 6
+- [x] T006 [P] Configure ESLint with functional programming rules in .eslintrc.cjs
+- [x] T007 [P] Configure Prettier formatting in .prettierrc
+- [x] T008 [P] Initialize Tailwind CSS with npx tailwindcss init -p
+- [x] T009 Configure Tailwind responsive breakpoints in tailwind.config.js (768px mobile/desktop)
+- [x] T010 [P] Install Jest dependencies: jest @testing-library/react @testing-library/jest-dom
+- [x] T011 [P] Install testing utilities: @testing-library/user-event @types/jest jest-environment-jsdom ts-jest
+- [x] T012 [P] Initialize Playwright for E2E tests with npm init playwright@latest
+- [x] T013 Configure Jest in jest.config.js with 90% coverage threshold
+- [x] T014 Create test setup file in src/setupTests.ts
 - [ ] T015 [P] Initialize shadcn/ui with npx shadcn-ui@latest init
 - [ ] T016 [P] Add shadcn Button component with npx shadcn-ui@latest add button
 - [ ] T017 [P] Add shadcn Input component with npx shadcn-ui@latest add input
 - [ ] T018 [P] Add shadcn Checkbox component with npx shadcn-ui@latest add checkbox
 - [ ] T019 [P] Add shadcn Card component with npx shadcn-ui@latest add card
 - [ ] T020 [P] Add shadcn Dialog component with npx shadcn-ui@latest add dialog
-- [ ] T021 Create project directory structure: src/{components,containers,store/slices,services,utils,types}
-- [ ] T022 Create test directory structure: tests/{unit,integration,e2e}
-- [ ] T023 Create public directory structure: public/{icons} for PWA assets
-- [ ] T024 Add package.json scripts: test, test:watch, test:coverage, test:e2e, lint, lint:fix, format
+- [x] T021 Create project directory structure: src/{components,containers,store/slices,services,utils,types}
+- [x] T022 Create test directory structure: tests/{unit,integration,e2e}
+- [x] T023 Create public directory structure: public/{icons} for PWA assets
+- [x] T024 Add package.json scripts: test, test:watch, test:coverage, test:e2e, lint, lint:fix, format
 
 **Checkpoint**: Project structure initialized, dependencies installed, tooling configured
 
@@ -62,48 +62,48 @@
 
 ### Core Type Definitions (TDD)
 
-- [ ] T025 [P] Write test for Task type guard in tests/unit/types/task.test.ts
-- [ ] T026 [P] Implement Task type and type guards in src/types/task.ts
-- [ ] T027 [P] Write test for Result type in tests/unit/types/result.test.ts
-- [ ] T028 [P] Implement Result type in src/types/result.ts
-- [ ] T029 [P] Write test for TaskListState type in tests/unit/types/state.test.ts
-- [ ] T030 [P] Implement state types in src/types/state.ts
+- [x] T025 [P] Write test for Task type guard in tests/unit/types/task.test.ts
+- [x] T026 [P] Implement Task type and type guards in src/types/task.ts
+- [x] T027 [P] Write test for Result type in tests/unit/types/result.test.ts
+- [x] T028 [P] Implement Result type in src/types/result.ts
+- [x] T029 [P] Write test for TaskListState type in tests/unit/types/state.test.ts
+- [x] T030 [P] Implement state types in src/types/state.ts
 
 ### Utility Functions (TDD)
 
-- [ ] T031 [P] Write test for ID generator in tests/unit/utils/id.test.ts
-- [ ] T032 [P] Implement generateId utility in src/utils/id.ts using crypto.randomUUID()
-- [ ] T033 [P] Write test for date utilities in tests/unit/utils/date.test.ts
-- [ ] T034 [P] Implement date utilities in src/utils/date.ts for timestamps
-- [ ] T035 [P] Write test for storage helper in tests/unit/utils/storage.test.ts
-- [ ] T036 [P] Implement storage helper functions in src/utils/storage.ts
+- [x] T031 [P] Write test for ID generator in tests/unit/utils/id.test.ts
+- [x] T032 [P] Implement generateId utility in src/utils/id.ts using crypto.randomUUID()
+- [x] T033 [P] Write test for date utilities in tests/unit/utils/date.test.ts
+- [x] T034 [P] Implement date utilities in src/utils/date.ts for timestamps
+- [x] T035 [P] Write test for storage helper in tests/unit/utils/storage.test.ts
+- [x] T036 [P] Implement storage helper functions in src/utils/storage.ts
 
 ### Core Services (TDD - Business Logic)
 
-- [ ] T037 [P] Write tests for addTask service in tests/unit/services/taskService.test.ts
-- [ ] T038 [P] Write tests for toggleTask service in tests/unit/services/taskService.test.ts
-- [ ] T039 [P] Write tests for updateTask service in tests/unit/services/taskService.test.ts
-- [ ] T040 [P] Write tests for deleteTask service in tests/unit/services/taskService.test.ts
-- [ ] T041 Implement taskService pure functions in src/services/taskService.ts (all CRUD operations)
-- [ ] T042 [P] Write tests for validation service in tests/unit/services/validationService.test.ts
-- [ ] T043 [P] Implement validationService in src/services/validationService.ts (title validation, storage limits)
-- [ ] T044 [P] Write tests for storage service in tests/unit/services/storageService.test.ts
-- [ ] T045 [P] Implement storageService in src/services/storageService.ts (save/load/clear/export/import)
+- [x] T037 [P] Write tests for addTask service in tests/unit/services/taskService.test.ts
+- [x] T038 [P] Write tests for toggleTask service in tests/unit/services/taskService.test.ts
+- [x] T039 [P] Write tests for updateTask service in tests/unit/services/taskService.test.ts
+- [x] T040 [P] Write tests for deleteTask service in tests/unit/services/taskService.test.ts
+- [x] T041 Implement taskService pure functions in src/services/taskService.ts (all CRUD operations)
+- [x] T042 [P] Write tests for validation service in tests/unit/services/validationService.test.ts
+- [x] T043 [P] Implement validationService in src/services/validationService.ts (title validation, storage limits)
+- [x] T044 [P] Write tests for storage service in tests/unit/services/storageService.test.ts
+- [x] T045 [P] Implement storageService in src/services/storageService.ts (save/load/clear/export/import)
 
 ### Redux Store Setup (TDD)
 
-- [ ] T046 [P] Write tests for Redux slice in tests/unit/store/tasksSlice.test.ts
-- [ ] T047 Implement tasksSlice with all reducers in src/store/slices/tasksSlice.ts
-- [ ] T048 [P] Write tests for selectors in tests/unit/store/selectors.test.ts
-- [ ] T049 [P] Implement memoized selectors in src/store/slices/tasksSlice.ts (selectFilteredTasks, selectMetrics)
-- [ ] T050 Configure Redux store in src/store/store.ts with middleware for LocalStorage persistence
-- [ ] T051 Implement LocalStorage middleware for auto-save with 300ms debounce
+- [x] T046 [P] Write tests for Redux slice in tests/unit/store/tasksSlice.test.ts
+- [x] T047 Implement tasksSlice with all reducers in src/store/slices/tasksSlice.ts
+- [x] T048 [P] Write tests for selectors in tests/unit/store/selectors.test.ts
+- [x] T049 [P] Implement memoized selectors in src/store/slices/tasksSlice.ts (selectFilteredTasks, selectMetrics)
+- [x] T050 Configure Redux store in src/store/store.ts with middleware for LocalStorage persistence
+- [x] T051 Implement LocalStorage middleware for auto-save with 300ms debounce
 
 ### Global Styles & Layout Foundation
 
-- [ ] T052 Create global styles in src/index.css with Tailwind imports
-- [ ] T053 [P] Create Layout component structure (no tests needed - pure UI)
-- [ ] T054 [P] Create base responsive layout in src/components/Layout.tsx with header/main/footer
+- [x] T052 Create global styles in src/index.css with Tailwind imports
+- [x] T053 [P] Create Layout component structure (no tests needed - pure UI)
+- [x] T054 [P] Create base responsive layout in src/components/Layout.tsx with header/main/footer
 
 **Checkpoint**: Foundation ready - all shared infrastructure complete, user story implementation can now begin in parallel
 
