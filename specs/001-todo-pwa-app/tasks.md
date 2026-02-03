@@ -150,22 +150,22 @@
 
 ### Tests for User Story 4 (TDD)
 
-- [ ] T072 [P] [US4] Write E2E responsive layout tests in tests/e2e/responsive.spec.ts (mobile/tablet/desktop viewports)
-- [ ] T073 [P] [US4] Write E2E touch target size tests in tests/e2e/responsive.spec.ts (min 44x44px validation)
-- [ ] T074 [P] [US4] Write E2E orientation change tests in tests/e2e/responsive.spec.ts
+- [x] T072 [P] [US4] Write E2E responsive layout tests in tests/e2e/responsive.spec.ts (mobile/tablet/desktop viewports)
+- [x] T073 [P] [US4] Write E2E touch target size tests in tests/e2e/responsive.spec.ts (min 44x44px validation)
+- [x] T074 [P] [US4] Write E2E orientation change tests in tests/e2e/responsive.spec.ts
 
 ### Implementation for User Story 4
 
-- [ ] T075 [P] [US4] Add responsive Tailwind classes to Layout.tsx (flex-col on mobile, optimized desktop spacing)
-- [ ] T076 [P] [US4] Add responsive Tailwind classes to TaskForm.tsx (full-width mobile input, desktop sizing)
-- [ ] T077 [P] [US4] Add responsive Tailwind classes to TaskItem.tsx (mobile-friendly spacing, stacked buttons on small screens)
-- [ ] T078 [P] [US4] Add responsive Tailwind classes to TaskList.tsx (scrollable area, mobile padding)
-- [ ] T079 [US4] Ensure all button components meet min-h-[44px] min-w-[44px] requirement (FR-014)
-- [ ] T080 [US4] Ensure all checkbox components meet min-h-[44px] min-w-[44px] requirement
-- [ ] T081 [US4] Add touch-manipulation class to all interactive elements
-- [ ] T082 [US4] Test responsive behavior on mobile device emulator (320px to 768px)
-- [ ] T083 [US4] Test responsive behavior on tablet emulator (768px to 1024px)
-- [ ] T084 [US4] Test responsive behavior on desktop (1024px+)
+- [x] T075 [P] [US4] Add responsive Tailwind classes to Layout.tsx (flex-col on mobile, optimized desktop spacing)
+- [x] T076 [P] [US4] Add responsive Tailwind classes to TaskForm.tsx (full-width mobile input, desktop sizing)
+- [x] T077 [P] [US4] Add responsive Tailwind classes to TaskItem.tsx (mobile-friendly spacing, stacked buttons on small screens)
+- [x] T078 [P] [US4] Add responsive Tailwind classes to TaskList.tsx (scrollable area, mobile padding)
+- [x] T079 [US4] Ensure all button components meet min-h-[44px] min-w-[44px] requirement (FR-014)
+- [x] T080 [US4] Ensure all checkbox components meet min-h-[44px] min-w-[44px] requirement
+- [x] T081 [US4] Add touch-manipulation class to all interactive elements
+- [x] T082 [US4] Test responsive behavior on mobile device emulator (320px to 768px)
+- [x] T083 [US4] Test responsive behavior on tablet emulator (768px to 1024px)
+- [x] T084 [US4] Test responsive behavior on desktop (1024px+)
 
 **Checkpoint**: App is fully responsive with mobile-optimized UI. P1 stories complete - ready for MVP deployment!
 
@@ -179,11 +179,11 @@
 
 ### Tests for User Story 2 (TDD)
 
-- [ ] T085 [P] [US2] Write E2E test for task completion toggle in tests/e2e/task-completion.spec.ts
-- [ ] T086 [P] [US2] Write E2E test for completed task visual styling in tests/e2e/task-completion.spec.ts
-- [ ] T087 [P] [US2] Write E2E test for task deletion in tests/e2e/task-completion.spec.ts
-- [ ] T088 [P] [US2] Write integration test for toggle functionality in tests/integration/TaskListContainer.test.tsx
-- [ ] T089 [P] [US2] Write integration test for delete functionality in tests/integration/TaskListContainer.test.tsx
+- [x] T085 [P] [US2] Write E2E test for task completion toggle in tests/e2e/task-completion.spec.ts
+- [x] T086 [P] [US2] Write E2E test for completed task visual styling in tests/e2e/task-completion.spec.ts
+- [x] T087 [P] [US2] Write E2E test for task deletion in tests/e2e/task-completion.spec.ts
+- [x] T088 [P] [US2] Write integration test for toggle functionality in tests/integration/TaskListContainer.test.tsx
+- [x] T089 [P] [US2] Write integration test for delete functionality in tests/integration/TaskListContainer.test.tsx
 
 ### Implementation for User Story 2
 
@@ -245,10 +245,10 @@
 
 ### Tests for User Story 3 (TDD)
 
-- [ ] T119 [P] [US3] Write E2E test for task editing in tests/e2e/task-editing.spec.ts
-- [ ] T120 [P] [US3] Write E2E test for empty text validation during edit in tests/e2e/task-editing.spec.ts
-- [ ] T121 [P] [US3] Write E2E test for edit cancellation in tests/e2e/task-editing.spec.ts
-- [ ] T122 [P] [US3] Write integration test for EditTaskDialog in tests/integration/EditTaskDialogContainer.test.tsx
+- [x] T119 [P] [US3] Write E2E test for task editing in tests/e2e/task-editing.spec.ts
+- [x] T120 [P] [US3] Write E2E test for empty text validation during edit in tests/e2e/task-editing.spec.ts
+- [x] T121 [P] [US3] Write E2E test for edit cancellation in tests/e2e/task-editing.spec.ts
+- [x] T122 [P] [US3] Write integration test for EditTaskDialog in tests/integration/EditTaskDialogContainer.test.tsx
 
 ### Implementation for User Story 3
 
@@ -393,6 +393,7 @@ All user stories are designed to be independently implementable and testable:
 **Phase 1 (Setup)**: All tasks marked [P] can run in parallel
 
 **Phase 2 (Foundational)**:
+
 - Type tests (T025, T027, T029) - parallel
 - Type implementations (T026, T028, T030) - parallel
 - Utility tests (T031, T033, T035) - parallel
@@ -400,7 +401,8 @@ All user stories are designed to be independently implementable and testable:
 - Service tests (T037-T045) - parallel
 - Service implementations can follow tests
 
-**Phase 3+ (User Stories)**: 
+**Phase 3+ (User Stories)**:
+
 - All test writing within a story can be parallel
 - All pure component creation can be parallel
 - Different user stories can be worked on in parallel by different developers
