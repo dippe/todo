@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <!-- Background -->
+  <rect width="192" height="192" fill="#000000"/>
+  
+  <!-- Checkmark icon in center -->
+  <g transform="translate(96, 96)">
+    <!-- Circle -->
+    <circle cx="0" cy="0" r="60" fill="none" stroke="#ffffff" stroke-width="8"/>
+    
+    <!-- Checkmark -->
+    <path d="M -20 0 L -10 15 L 25 -20" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Text "TODO" -->
+  <text x="96" y="165" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle">TODO</text>
+</svg>

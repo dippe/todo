@@ -5,6 +5,42 @@ import { createStore } from './store/store';
 import App from './App';
 import './index.css';
 
+/**
+ * Register service worker for PWA offline functionality
+ * Only registers in production builds
+ */
+const registerServiceWorker = async (): Promise<void> => {
+  if ('serviceWorker' in navigator && import.meta.env?.MODE === 'production') {
+    try {
+      const registration = await navigator.serviceWorker.register(
+        '/service-worker.js',
+        { scope: '/' }
+      );
+      console.log(
+        'Service Worker registered successfully:',
+        registration.scope
+      );
+
+      // Check for updates periodically
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (
+              newWorker.state === 'installed' &&
+              navigator.serviceWorker.controller
+            ) {
+              console.log('New service worker available. Reload to update.');
+            }
+          });
+        }
+      });
+    } catch (error) {
+      console.error('Service Worker registration failed:', error);
+    }
+  }
+};
+
 const initializeApp = (): void => {
   const store = createStore();
 
@@ -23,6 +59,9 @@ const initializeApp = (): void => {
       </Provider>
     </React.StrictMode>
   );
+
+  // Register service worker after app initialization
+  registerServiceWorker();
 };
 
 initializeApp();
