@@ -4,7 +4,7 @@
 
 ### I. Simplicity and Minimalism
 All implementations must follow the principle of simplicity. Complex solutions, frameworks,
-and dependencies should be avoided unless essential. Code must be self-explanatory, eliminating unnecessary overhead or complexity.
+and dependencies should be avoided unless essential. Code must be self-explanatory, eliminating unnecessary overhead or complexity. Before making decisions, conduct web research to identify and adopt best practices.
 
 ### II. Single Responsibility Orientation
 Every module or feature must have a single, well-defined responsibility encapsulated in a standalone directory
