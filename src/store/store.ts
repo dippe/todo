@@ -15,18 +15,23 @@ let saveTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
 const persistenceMiddleware: Middleware<{}, AppRootState> =
   (storeAPI) => (next) => (action: unknown) => {
+    const prevState = storeAPI.getState();
     const result = next(action as Action);
+    const nextState = storeAPI.getState();
 
-    if (saveTimeoutId !== null) {
-      clearTimeout(saveTimeoutId);
-    }
-
-    saveTimeoutId = setTimeout(() => {
-      const state = storeAPI.getState();
-      if (state.taskList) {
-        saveToStorage(state.taskList);
+    // Only save if state actually changed
+    if (prevState.taskList !== nextState.taskList) {
+      if (saveTimeoutId !== null) {
+        clearTimeout(saveTimeoutId);
       }
-    }, 300);
+
+      saveTimeoutId = setTimeout(() => {
+        const state = storeAPI.getState();
+        if (state.taskList) {
+          saveToStorage(state.taskList);
+        }
+      }, 300);
+    }
 
     return result;
   };

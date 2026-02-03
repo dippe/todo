@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import TaskList from '@/components/TaskList';
+import { TaskList } from '@/components/TaskList';
 import {
   toggleTask,
   deleteTask,

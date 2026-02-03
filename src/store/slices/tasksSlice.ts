@@ -4,7 +4,7 @@ import type { TaskId, TaskList } from '../../types/task';
 import { createInitialTaskListState } from '../../types/state';
 import * as taskService from '../../services/taskService';
 
-interface UpdateTaskPayload {
+export interface UpdateTaskPayload {
   readonly id: TaskId;
   readonly title: string;
 }
@@ -41,7 +41,10 @@ const tasksSlice = createSlice({
       };
     },
 
-    updateTask: (state, action: PayloadAction<UpdateTaskPayload>): TaskListState => {
+    updateTask: (
+      state,
+      action: PayloadAction<UpdateTaskPayload>
+    ): TaskListState => {
       const { id, title } = action.payload;
       const result = taskService.updateTask(state.items, id, title);
 
@@ -74,7 +77,10 @@ const tasksSlice = createSlice({
       filter: action.payload,
     }),
 
-    setEditingId: (state, action: PayloadAction<TaskId | null>): TaskListState => ({
+    setEditingId: (
+      state,
+      action: PayloadAction<TaskId | null>
+    ): TaskListState => ({
       ...state,
       editingId: action.payload,
     }),

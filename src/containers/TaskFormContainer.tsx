@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import TaskForm from '@/components/TaskForm';
+import { TaskForm } from '@/components/TaskForm';
 import { addTask } from '@/store/slices/tasksSlice';
 import type { RootState } from '@/types/state';
 

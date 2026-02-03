@@ -20,7 +20,7 @@ export const TaskList: React.FC<TaskListProps> = ({
   if (tasks.length === 0) {
     return (
       <div
-        className="text-center py-8 text-muted-foreground"
+        className="text-center py-6 sm:py-8 text-sm sm:text-base text-muted-foreground"
         role="status"
         aria-live="polite"
       >
@@ -31,7 +31,7 @@ export const TaskList: React.FC<TaskListProps> = ({
 
   return (
     <ul
-      className="divide-y divide-border rounded-md border border-border"
+      className="divide-y divide-border rounded-md border border-border overflow-hidden"
       role="list"
       aria-label="Task list"
     >

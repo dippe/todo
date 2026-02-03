@@ -1,10 +1,17 @@
 import { TaskListState } from '../../../src/types/state';
 import { createStore } from '../../../src/store/store';
-import { saveToStorage } from '../../../src/utils/storage';
+import { saveToStorage, loadFromStorage } from '../../../src/utils/storage';
 
 jest.mock('../../../src/utils/storage', () => ({
   saveToStorage: jest.fn(),
-  loadFromStorage: jest.fn(),
+  loadFromStorage: jest.fn(() => ({
+    ok: true,
+    data: {
+      items: [],
+      filter: 'all',
+      editingId: null,
+    },
+  })),
 }));
 
 describe('store', () => {
@@ -111,7 +118,7 @@ describe('store', () => {
   describe('store configuration', () => {
     it('should have Redux DevTools extension integration', () => {
       const store = createStore();
-      
+
       expect(store).toBeDefined();
       expect(typeof store.getState).toBe('function');
       expect(typeof store.dispatch).toBe('function');
@@ -122,12 +129,12 @@ describe('store', () => {
       const listener = jest.fn();
 
       const unsubscribe = store.subscribe(listener);
-      
+
       store.dispatch({ type: 'taskList/addTask', payload: 'Test' });
       jest.advanceTimersByTime(300);
 
       expect(listener).toHaveBeenCalled();
-      
+
       unsubscribe();
     });
   });

@@ -48,14 +48,14 @@ export const TaskForm: React.FC<TaskFormProps> = ({
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
         aria-label={mode === 'create' ? 'Add task' : 'Edit task title'}
-        className="flex-1 min-h-[44px]"
+        className="flex-1 min-h-[44px] touch-manipulation"
         maxLength={500}
       />
-      <div className="flex gap-2">
+      <div className="flex gap-2 w-full sm:w-auto">
         <Button
           type="submit"
           aria-label={submitLabel}
-          className="min-h-[44px] min-w-[44px] flex-1 sm:flex-none"
+          className="min-h-[44px] min-w-[44px] flex-1 sm:flex-none touch-manipulation"
         >
           {submitLabel}
         </Button>
@@ -65,7 +65,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
             variant="outline"
             onClick={onCancel}
             aria-label="Cancel"
-            className="min-h-[44px] min-w-[44px] flex-1 sm:flex-none"
+            className="min-h-[44px] min-w-[44px] flex-1 sm:flex-none touch-manipulation"
           >
             Cancel
           </Button>

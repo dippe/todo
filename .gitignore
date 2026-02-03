@@ -12,3 +12,6 @@ Thumbs.db
 coverage/
 *.min.js
 node_modules
+test-results/
+.sass-cache/
+playwright-report/
