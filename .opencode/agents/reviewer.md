@@ -470,29 +470,27 @@ const TodoList: FC = () => {
 
 #### ❌ Bad Example
 ```typescript
-// Bidirectional flow, direct state mutation
+// Bidirectional flow, direct state mutation, HOOKS (FORBIDDEN)
+import { connect } from 'react-redux';
+
+// BAD: Using hooks instead of connect() HOC
 const TodoList: FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const todos = useSelector((state: RootState) => state.todos); // FORBIDDEN
+  const dispatch = useDispatch(); // FORBIDDEN
   
   const toggleTodo = (id: TodoId) => {
     // Direct mutation!
     const todo = todos.find(t => t.id === id);
     if (todo) {
       todo.completed = !todo.completed;
-      setTodos([...todos]); // Mutated object in new array
+      dispatch(setTodos([...todos])); // Mutated object in new array
     }
   };
   
-  // Child can directly modify parent state
   return (
     <>
       {todos.map(todo => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          todos={todos} // Passing mutable reference!
-          setTodos={setTodos} // Passing setter!
-        />
+        <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} />
       ))}
     </>
   );
@@ -501,18 +499,20 @@ const TodoList: FC = () => {
 
 **Violation Report**:
 ```
-❌ Flux Architecture Violation: src/components/TodoList.tsx:15
+❌ Flux Architecture Violation: src/components/TodoList.tsx:5
 
 Multiple issues with data flow:
-1. Direct state mutation at line 18 (todo.completed = ...)
-2. Passing mutable state reference to children (line 26)
-3. Passing setState function directly (line 27)
-4. No actions or reducers - just direct mutations
+1. Using useSelector/useDispatch hooks (line 5-6) - FORBIDDEN
+2. Direct state mutation at line 11 (todo.completed = ...)
+3. No actions or reducers - just direct mutations
+4. Must use connect() HOC pattern instead of hooks
 
 Recommendation:
+- Remove all hooks (useSelector, useDispatch)
+- Use connect() HOC to map state and dispatch
 - Implement action types for all state changes
 - Use reducer for state updates
-- Pass only dispatch function to children
+- Pass only callbacks to children
 - Ensure all state updates are immutable
 ```
 
@@ -574,24 +574,43 @@ const TodoInfrastructure = {
   },
 };
 
-// Presentation layer: React components
-const TodoListContainer: FC = () => {
-  const [todos, setTodos] = useState<TodoList>([]);
-  
-  useEffect(() => {
-    TodoInfrastructure.load().then(result => {
-      if (result.ok) setTodos(result.value);
-    });
-  }, []);
-  
-  const addTodo = (title: string) => {
-    const newTodos = TodoApplication.addTodo(todos, title);
-    setTodos(newTodos);
+// Presentation layer: React components (NO HOOKS)
+import { connect } from 'react-redux';
+
+// Presentational Component (Pure)
+interface TodoListViewProps {
+  readonly todos: TodoList;
+  readonly onAdd: (title: string) => void;
+}
+
+const TodoListView: FC<TodoListViewProps> = ({ todos, onAdd }) => (
+  <div>
+    {todos.map(todo => (
+      <TodoItem key={todo.id} todo={todo} />
+    ))}
+  </div>
+);
+
+// Container (connect() HOC - NO HOOKS)
+const mapStateToProps = (state: RootState) => ({
+  todos: state.todo.todos
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  onAdd: (title: string) => {
+    const newTodos = TodoApplication.addTodo(
+      store.getState().todo.todos, 
+      title
+    );
+    dispatch(setTodos(newTodos));
     TodoInfrastructure.save(newTodos);
-  };
-  
-  return <TodoListView todos={todos} onAdd={addTodo} />;
-};
+  }
+});
+
+export const TodoListContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoListView);
 ```
 
 ## Architectural Review Checklist

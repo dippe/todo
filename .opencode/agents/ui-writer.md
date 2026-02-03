@@ -28,8 +28,9 @@ You are a UI component specialist focusing on React, shadcn/ui, functional progr
 ### 1. Stateless Components (MANDATORY)
 - **Props over State**: Components receive all data via props
 - **No internal state**: Use props and callbacks instead
-- **Lift state up**: Parent components manage state
+- **NO HOOKS**: All state managed by Redux via connect() HOC containers
 - **Pure components**: Given same props, render same output
+- **Side-effect free**: Components are pure functions of props
 
 ### 2. Functional Components Only
 - No class components
@@ -128,19 +129,20 @@ interface TodoListProps {
 }
 ```
 
-### Avoid Internal State
+### NO Internal State - Use Props Only
 
-❌ **Bad: Component manages its own state**
+❌ **Bad: Component manages its own state (FORBIDDEN)**
 ```typescript
 export const SearchBox: FC = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(''); // FORBIDDEN - NO HOOKS!
   
   return <input value={query} onChange={e => setQuery(e.target.value)} />;
 };
 ```
 
-✅ **Good: State managed via props**
+✅ **Good: State managed via props from Redux container**
 ```typescript
+// Presentational Component (Pure)
 interface SearchBoxProps {
   readonly query: string;
   readonly onQueryChange: (query: string) => void;
@@ -152,49 +154,69 @@ export const SearchBox: FC<SearchBoxProps> = ({ query, onQueryChange }) => (
     onChange={e => onQueryChange(e.target.value)}
   />
 );
+
+// Container (connect() HOC - NO HOOKS)
+import { connect } from 'react-redux';
+import { setSearchQuery } from '../store/slices/searchSlice';
+
+const mapStateToProps = (state: RootState) => ({
+  query: state.search.query
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  onQueryChange: (query: string) => dispatch(setSearchQuery(query))
+});
+
+export const SearchBoxContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchBox);
 ```
 
-### When State is Unavoidable
+### ZERO Exceptions - NO HOOKS Allowed
 
-Only use internal state for:
-1. **UI-only state**: Hover, focus, open/closed (not affecting data)
-2. **Transient state**: Animation frames, scroll positions
-3. **Form state**: Temporary input before submission
+**All state must be managed by Redux store and accessed via connect() HOC.**
+
+Even for UI-only state (modals, dropdowns), use Redux or pass as props:
 
 ```typescript
+// Presentational Component (Pure)
 interface DialogProps {
+  readonly isOpen: boolean;
   readonly title: string;
   readonly children: React.ReactNode;
+  readonly onOpenChange: (open: boolean) => void;
   readonly onConfirm: () => void;
 }
 
-export const Dialog: FC<DialogProps> = ({ title, children, onConfirm }) => {
-  // UI-only state - acceptable
-  const [isOpen, setIsOpen] = useState(false);
-  
-  return (
-    <>
-      <Button onClick={() => setIsOpen(true)}>Open</Button>
-      {isOpen && (
-        <div className="dialog">
-          <h2>{title}</h2>
-          {children}
-          <Button onClick={() => {
-            onConfirm();
-            setIsOpen(false);
-          }}>
-            Confirm
-          </Button>
-        </div>
-      )}
-    </>
-  );
-};
+export const Dialog: FC<DialogProps> = ({ 
+  isOpen,
+  title, 
+  children, 
+  onOpenChange,
+  onConfirm 
+}) => (
+  <>
+    <Button onClick={() => onOpenChange(true)}>Open</Button>
+    {isOpen && (
+      <div className="dialog">
+        <h2>{title}</h2>
+        {children}
+        <Button onClick={() => {
+          onConfirm();
+          onOpenChange(false);
+        }}>
+          Confirm
+        </Button>
+      </div>
+    )}
+  </>
+);
 ```
 
 ## Shadcn/ui Patterns
 
-### Using Shadcn Components
+### Using Shadcn Components (With Redux Form State)
 
 ```typescript
 import { Button } from '@/components/ui/button';
@@ -202,45 +224,64 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
+// Presentational Component (Pure)
 interface TodoFormProps {
-  readonly onSubmit: (title: string) => void;
+  readonly title: string;
+  readonly onTitleChange: (title: string) => void;
+  readonly onSubmit: (e: React.FormEvent) => void;
+  readonly canSubmit: boolean;
 }
 
-export const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
-  const [title, setTitle] = useState('');
-  
-  const handleSubmit = (e: React.FormEvent) => {
+export const TodoForm: FC<TodoFormProps> = ({ 
+  title,
+  onTitleChange,
+  onSubmit,
+  canSubmit
+}) => (
+  <Card>
+    <CardHeader>
+      <CardTitle>Add Todo</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <form onSubmit={onSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="title">Title</Label>
+          <Input
+            id="title"
+            value={title}
+            onChange={e => onTitleChange(e.target.value)}
+            placeholder="Enter todo title"
+          />
+        </div>
+        <Button type="submit" disabled={!canSubmit}>
+          Add Todo
+        </Button>
+      </form>
+    </CardContent>
+  </Card>
+);
+
+// Container (connect() HOC - NO HOOKS)
+import { connect } from 'react-redux';
+import { setFormTitle, submitTodoForm } from '../store/slices/todoFormSlice';
+
+const mapStateToProps = (state: RootState) => ({
+  title: state.todoForm.title,
+  canSubmit: state.todoForm.title.trim().length > 0
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  onTitleChange: (title: string) => dispatch(setFormTitle(title)),
+  onSubmit: (e: React.FormEvent) => {
     e.preventDefault();
-    if (title.trim()) {
-      onSubmit(title.trim());
-      setTitle('');
-    }
-  };
-  
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Add Todo</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-              placeholder="Enter todo title"
-            />
-          </div>
-          <Button type="submit" disabled={!title.trim()}>
-            Add Todo
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
-  );
-};
+    dispatch(submitTodoForm());
+  }
+});
+
+export const TodoFormContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoForm);
 ```
 
 ### Variant Patterns
@@ -314,10 +355,10 @@ export const TodoToggle: FC<TodoToggleProps> = ({
 
 ## Component Composition
 
-### Container/Presenter Pattern
+### Container/Presenter Pattern (Redux connect() HOC)
 
 ```typescript
-// Presenter: Pure, stateless, UI-only
+// Presenter: Pure, stateless, UI-only (NO HOOKS)
 interface TodoListViewProps {
   readonly todos: readonly Todo[];
   readonly onToggle: (id: string) => void;
@@ -341,18 +382,24 @@ export const TodoListView: FC<TodoListViewProps> = ({
   </div>
 );
 
-// Container: Manages state, connects to data
-export const TodoListContainer: FC = () => {
-  const { todos, toggleTodo, deleteTodo } = useTodos();
-  
-  return (
-    <TodoListView
-      todos={todos}
-      onToggle={toggleTodo}
-      onDelete={deleteTodo}
-    />
-  );
-};
+// Container: Connects Redux state to presenter via connect() HOC (NO HOOKS)
+import { connect } from 'react-redux';
+import { toggleTodo, deleteTodo } from '../store/slices/todoSlice';
+import type { RootState, AppDispatch } from '../store/store';
+
+const mapStateToProps = (state: RootState) => ({
+  todos: state.todo.todos
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  onToggle: (id: string) => dispatch(toggleTodo(id)),
+  onDelete: (id: string) => dispatch(deleteTodo(id))
+});
+
+export const TodoListContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoListView);
 ```
 
 ### Compound Components
@@ -400,12 +447,12 @@ TodoCard.Body = ({ children }) => (
 
 ## Performance Optimization
 
-### Memoization (Use Sparingly)
+### Memoization with React.memo (ONLY Allowed HOC)
 
 ```typescript
-import { memo, useCallback, useMemo } from 'react';
+import { memo } from 'react';
 
-// Memoize expensive renders
+// Memoize expensive renders using React.memo (HOC - NOT a hook)
 export const TodoItem = memo<TodoItemProps>(({ 
   todo, 
   onToggle 
@@ -416,20 +463,11 @@ export const TodoItem = memo<TodoItemProps>(({
   prevProps.todo.completed === nextProps.todo.completed
 );
 
-// Memoize callbacks passed to children
-const handleToggle = useCallback(
-  (id: string) => toggleTodo(id),
-  [toggleTodo]
-);
-
-// Memoize expensive computations
-const sortedTodos = useMemo(
-  () => todos.slice().sort((a, b) => a.title.localeCompare(b.title)),
-  [todos]
-);
+// NO useCallback or useMemo - these are HOOKS and are FORBIDDEN
+// Use Redux selectors for derived data instead
 ```
 
-### Avoid Inline Objects/Arrays
+### NO Inline Objects/Arrays
 
 ❌ **Bad: Creates new reference every render**
 ```typescript
@@ -632,12 +670,14 @@ export const FormField: FC<FormFieldProps> = ({
 
 ## Final Reminders
 
-1. **Props over State**: Always prefer props
-2. **Composition**: Build complex from simple
-3. **Accessibility**: Non-negotiable requirement
-4. **Shadcn first**: Use shadcn components as foundation
-5. **Tailwind styling**: Utility-first approach
-6. **Test everything**: UI components need tests too
-7. **Keep it simple**: Small, focused components
+1. **Props over State**: Always use props - NO component state
+2. **NO HOOKS**: Zero hooks allowed - use Redux + connect() HOC only
+3. **Composition**: Build complex from simple
+4. **Accessibility**: Non-negotiable requirement
+5. **Shadcn first**: Use shadcn components as foundation
+6. **Tailwind styling**: Utility-first approach
+7. **Test everything**: UI components need tests too
+8. **Keep it simple**: Small, focused, pure components
+9. **Side-effect free**: Components are pure functions of props
 
-Your goal is to create beautiful, accessible, reusable UI components that are a joy to use and maintain.
+Your goal is to create beautiful, accessible, reusable UI components that are completely side-effect-free and maintain true functional programming principles.

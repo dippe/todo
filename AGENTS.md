@@ -5,16 +5,18 @@ Auto-generated from all feature plans. Last updated: 2026-02-03
 ## Active Technologies
 
 - TypeScript 5.x / JavaScript ES2022 (001-todo-pwa-responsive)
-- React 18+ with Flux architecture (Zustand for state management)
+- React 18+ with Flux architecture (Redux Toolkit for state management)
 - shadcn/ui for UI components
 
 ## Project Structure
 
 ```text
 src/
-  components/    # React UI components (presentational, props-only)
-  containers/    # HOC containers connecting Flux state to components
-  store/         # Zustand store definitions (Flux state management)
+  components/    # React UI components (presentational, props-only, NO HOOKS)
+  containers/    # HOC containers using connect() - NO HOOKS
+  store/         # Redux Toolkit slices (pure reducers)
+    slices/      # Feature-specific slices
+    store.ts     # Root store configuration
   utils/         # Pure utility functions
   types/         # TypeScript type definitions
   services/      # Business logic (pure functions)
@@ -62,41 +64,82 @@ TypeScript 5.x / JavaScript ES2022: Follow standard conventions
 ### React Components
 - Functional components only (no class components)
 - **Presentational components**: Pure, stateless, receive all data via props
-- **Container components**: HOCs that connect Flux state to presentational components
-- **NO useEffect**: Side effects belong in services, not components
-- **Minimal hooks**: Avoid useState, useEffect; prefer props and HOC containers
-- **Allowed hooks**: Only React.memo for performance, useCallback/useMemo sparingly
+- **Container components**: HOCs using `connect()` from react-redux (NO HOOKS)
+- **ZERO HOOKS ALLOWED**: No useState, useEffect, useContext, or custom hooks
+- **Exception**: Only React.memo for memoization (not a hook, but a HOC)
+- **Side-effect free**: Components must be pure functions of props
 - Destructure props immediately
 - Use TypeScript interfaces for props
 - shadcn/ui for UI components
 
-### Flux State Management (Zustand)
+### Flux State Management (Redux Toolkit)
 - **Unidirectional data flow**: Actions → Store → Containers → Components
 - **Store structure**: Pure reducer functions, immutable state updates
 - **Container pattern**: HOCs subscribe to store, pass data as props to components
-- **No component state**: Lift all state to Flux store via containers
+- **No component state**: Lift all state to Redux store via containers
 - **Selectors**: Use pure selector functions for derived state
-- **Actions**: Pure functions that return new state
+- **Actions**: Pure functions that return action objects
 - **Example pattern**:
   ```typescript
-  // Store (src/store/todoStore.ts)
-  const useTodoStore = create<TodoState>((set) => ({
-    todos: [],
-    addTodo: (todo) => set((state) => ({ todos: [...state.todos, todo] }))
-  }))
+  // Slice (src/store/slices/todoSlice.ts)
+  import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+  
+  interface TodoState {
+    readonly todos: readonly Todo[]
+  }
+  
+  const todoSlice = createSlice({
+    name: 'todo',
+    initialState: { todos: [] } as TodoState,
+    reducers: {
+      addTodo: (state, action: PayloadAction<Todo>) => {
+        state.todos = [...state.todos, action.payload]
+      }
+    }
+  })
+  
+  export const { addTodo } = todoSlice.actions
+  export default todoSlice.reducer
+  
+  // Store (src/store/store.ts)
+  import { configureStore } from '@reduxjs/toolkit'
+  import todoReducer from './slices/todoSlice'
+  
+  export const store = configureStore({
+    reducer: { todo: todoReducer }
+  })
+  
+  export type RootState = ReturnType<typeof store.getState>
+  export type AppDispatch = typeof store.dispatch
   
   // Container (src/containers/TodoListContainer.tsx)
-  const TodoListContainer = () => {
-    const { todos, addTodo } = useTodoStore()
-    return <TodoList todos={todos} onAddTodo={addTodo} />
-  }
+  import { connect } from 'react-redux'
+  import { TodoList } from '../components/TodoList'
+  import { addTodo } from '../store/slices/todoSlice'
+  import type { RootState, AppDispatch } from '../store/store'
+  
+  const mapStateToProps = (state: RootState) => ({
+    todos: state.todo.todos
+  })
+  
+  const mapDispatchToProps = (dispatch: AppDispatch) => ({
+    onAddTodo: (todo: Todo) => dispatch(addTodo(todo))
+  })
+  
+  export const TodoListContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TodoList)
   
   // Component (src/components/TodoList.tsx)
   interface TodoListProps {
-    todos: Todo[]
-    onAddTodo: (todo: Todo) => void
+    readonly todos: readonly Todo[]
+    readonly onAddTodo: (todo: Todo) => void
   }
-  const TodoList = ({ todos, onAddTodo }: TodoListProps) => (...)
+  
+  export const TodoList = ({ todos, onAddTodo }: TodoListProps) => (
+    <div>{todos.map(todo => <TodoItem key={todo.id} todo={todo} />)}</div>
+  )
   ```
 
 ### Testing
@@ -239,11 +282,6 @@ This project uses specialized agents for different development tasks. Each agent
 - **Component re-renders**: Minimize with memoization
 - **Test speed**: Unit tests < 100ms each
 - **Build time**: Keep under 30 seconds
-
-## Recent Changes
-
-- 001-todo-pwa-responsive: Added TypeScript 5.x / JavaScript ES2022
-- 2026-02-03: Created specialized development agents for TDD/FP workflow
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
