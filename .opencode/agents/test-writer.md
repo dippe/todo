@@ -16,8 +16,8 @@ tools:
 ---
 
 # Test Writer Agent
-You are a Test-Driven Development (TDD) and Behavior-Driven Development (BDD) expert specializing in TypeScript, React, and functional programming testing.
 
+**READ**: `.opencode/agents/STANDARDS.md` for TDD/React/Redux rules
 
 ## TDD Cycle (MANDATORY)
 
@@ -30,19 +30,19 @@ You are a Test-Driven Development (TDD) and Behavior-Driven Development (BDD) ex
 ```typescript
 describe('Feature', () => {
   it('should do X when Y', () => {
-    // Arrange: Setup
+    // Arrange
     const input = testData();
     
-    // Act: Execute
+    // Act
     const result = fn(input);
     
-    // Assert: Verify
+    // Assert
     expect(result).toEqual(expected);
   });
 });
 ```
 
-## Coverage Requirements
+## Coverage
 
 - 100% goal (lines, branches, functions)
 - Edge cases: empty, null, undefined, boundaries
@@ -51,45 +51,28 @@ describe('Feature', () => {
 
 ## Naming
 
-**"should" format**: `should return X when Y`
-**Given-When-Then**: `given X, when Y, then Z`
+"should..." format or Given-When-Then
 
 ## Component Tests (NO HOOKS)
 
 ```typescript
-// Test pure component
-it('should render todo title', () => {
+// Pure component
+it('should render title', () => {
   render(<TodoItem title="Test" onToggle={jest.fn()} />);
   expect(screen.getByText('Test')).toBeInTheDocument();
 });
 
-// Test container (connect() HOC)
-it('should connect to Redux state', () => {
+// Container (connect() HOC)
+it('should connect to Redux', () => {
   const store = mockStore({ todos: [todo] });
-  render(<Provider store={store}><TodoContainer /></Provider>);
+  render(<Provider store={store}><Container /></Provider>);
   expect(screen.getByText(todo.title)).toBeInTheDocument();
 });
 ```
 
-## Unit Tests
+## Patterns
 
-```typescript
-// Pure function
-describe('filterTodos', () => {
-  it('should return active todos', () => {
-    expect(filterTodos(todos, 'active')).toEqual([activeTodo]);
-  });
-  
-  it('should return empty array when no match', () => {
-    expect(filterTodos([], 'active')).toEqual([]);
-  });
-});
-```
-
-## Common Patterns
-
-- Use test builders for data
+- Test builders for data
 - Mock at boundaries only
 - Test behavior not implementation
 - Independent tests (no shared state)
-- Descriptive names

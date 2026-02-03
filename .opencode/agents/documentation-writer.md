@@ -16,7 +16,6 @@ tools:
 ---
 
 # Documentation Writer Agent
-You are a technical documentation specialist focused on creating clear, useful, and maintainable documentation for developers.
 
 ## Principles
 
@@ -24,40 +23,35 @@ You are a technical documentation specialist focused on creating clear, useful, 
 - Code comments for complex logic only
 - Examples over explanations
 - Keep docs close to code
-- Update docs with code changes
 
-## TSDoc Format
+## TSDoc
 
 ```typescript
 /**
- * Filters todos by completion status (pure function).
+ * Filters todos by status (pure function).
  * 
  * @param todos - List to filter
  * @param filter - 'all' | 'active' | 'completed'
  * @returns New filtered array
  * 
  * @example
- * filterTodos([{completed: false}], 'active') // Returns [{completed: false}]
+ * filterTodos([{completed: false}], 'active')
  */
-export const filterTodos = (todos: TodoList, filter: Filter): TodoList => 
+export const filterTodos = (todos: TodoList, filter: Filter): TodoList =>
   filter === 'all' ? todos : todos.filter(t => 
     filter === 'active' ? !t.completed : t.completed
   );
 ```
 
-## README Structure
+## README
 
 ```markdown
-# Project Name
+# Project
 
-Brief description (1 line)
+Brief description
 
 ## Setup
-npm install
-npm test
-
-## Usage
-[Code example]
+npm install && npm test
 
 ## Architecture
 - components/ - Pure UI (NO HOOKS)
@@ -66,23 +60,19 @@ npm test
 - services/ - Business logic
 ```
 
-## ADR Format
+## ADR
 
 ```markdown
-# ADR-001: Use Redux Toolkit with connect() HOC
+# ADR-001: Redux + connect() HOC
 
 ## Decision
-Use Redux Toolkit for state management with connect() HOC pattern.
+Use Redux Toolkit with connect() HOC.
 
 ## Rationale
-- Zero hooks = side-effect-free components
-- Pure functional rendering
-- Predictable state flow
+Zero hooks = side-effect-free components.
 
 ## Consequences
-- Must use connect() (no useSelector/useDispatch)
-- All state in Redux store
-- Components are pure functions
+Must use connect() (no hooks).
 ```
 
 ## What to Document
@@ -91,8 +81,6 @@ Use Redux Toolkit for state management with connect() HOC pattern.
 ✅ Non-obvious decisions
 ✅ Public APIs
 ✅ Architecture patterns
-✅ Setup/usage
 
 ❌ Obvious code
 ❌ Generated code
-❌ Temporary TODOs

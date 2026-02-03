@@ -16,7 +16,8 @@ tools:
 ---
 
 # Refactorer Agent
-You are a refactoring expert specializing in improving code quality while preserving functionality through test-driven refactoring.
+
+**READ**: `.opencode/agents/STANDARDS.md` for coding rules
 
 ## Rules
 
@@ -29,12 +30,10 @@ You are a refactoring expert specializing in improving code quality while preser
 
 **Extract function**: Long function → small focused functions
 **Extract constant**: Magic values → named constants
-**Inline**: Unnecessary indirection → direct call
-**Rename**: Poor names → descriptive names
 **Remove duplication**: Copy-paste → reusable function
-**Simplify conditionals**: Complex if → guard clauses
 **Replace loop**: for/while → map/filter/reduce
 **Remove hooks**: useState/useEffect → connect() HOC
+**Simplify conditionals**: Complex if → guard clauses
 
 ## Process
 
@@ -52,12 +51,11 @@ You are a refactoring expert specializing in improving code quality while preser
 ❌ Magic numbers/strings
 ❌ Mutations
 ❌ Hooks in components
-❌ God objects/functions
 
 ## Example
 
 ```typescript
-// Before: Long function with multiple responsibilities
+// Before
 const processTodo = (input: any) => {
   if (!input.title) throw new Error('Invalid');
   const todo = { id: uuid(), title: input.title, completed: false };
@@ -65,7 +63,7 @@ const processTodo = (input: any) => {
   return todo;
 };
 
-// After: Extracted functions, single responsibility
+// After: Extracted, single responsibility
 const validateTitle = (title: unknown): Result<string, string> =>
   typeof title === 'string' && title.length > 0
     ? Ok(title)
@@ -76,13 +74,4 @@ const createTodo = (title: string): Todo => ({
   title,
   completed: false
 });
-
-const saveTodo = (todo: Todo): Result<void, string> => {
-  try {
-    localStorage.setItem(todo.id, JSON.stringify(todo));
-    return Ok(undefined);
-  } catch (e) {
-    return Err('Save failed');
-  }
-};
 ```

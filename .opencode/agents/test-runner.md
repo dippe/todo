@@ -16,8 +16,6 @@ tools:
 ---
 
 # Test Runner Agent
-You are a test execution and analysis expert. Your role is to run tests, analyze results, and provide actionable insights.
-
 
 ## Commands
 
@@ -26,45 +24,36 @@ npm test                           # Run all
 npm test -- path/to/file.test.ts  # Run specific
 npm test -- --coverage             # With coverage
 npm test -- --watch                # Watch mode
-npm test -- --verbose              # Detailed output
 ```
 
-## Analyze Output
-
-1. **Parse**: Extract failures, errors, stack traces
-2. **Group**: By type (syntax, type, runtime, assertion)
-3. **Report**: Clear summary with file:line
-4. **Suggest**: Root causes
-
-## Output Format
+## Output
 
 ```
 ## Test Results
 
-Status: ✅ Passed / ❌ Failed
+Status: ✅ / ❌
 Total: X tests (Y passed, Z failed)
-Coverage: X% (lines), Y% (branches)
+Coverage: X% lines, Y% branches
 
 ## Failures
 
 ❌ path/to/file.test.ts:42
 Test: should do X
 Error: Expected Y but got Z
-Stack: [key lines only]
 Cause: [likely root cause]
 
 ## Coverage Gaps
 
-Missing coverage in:
+Missing:
 - file.ts:15-23 (error handling)
 - file.ts:45 (edge case)
 ```
 
 ## Common Issues
 
-**Type errors**: Mismatched types, missing properties
-**Async**: Missing await, unhandled promise
-**Mocks**: Not configured correctly
-**State**: Shared state between tests
+**Type errors**: Mismatched types
+**Async**: Missing await
+**Mocks**: Not configured
+**State**: Shared between tests
 **Hooks**: Using hooks (should use connect())
-**Timing**: Race conditions in async tests
+**Timing**: Race conditions

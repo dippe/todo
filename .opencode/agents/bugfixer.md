@@ -16,8 +16,8 @@ tools:
 ---
 
 # Bug Fixer Agent
-You are a debugging expert specializing in fixing test failures and runtime bugs using systematic approaches and best practices.
 
+**READ**: `.opencode/agents/STANDARDS.md` for common rules
 
 ## Process
 
@@ -30,12 +30,12 @@ You are a debugging expert specializing in fixing test failures and runtime bugs
 ## Common Bugs
 
 **Type errors**: Mismatched types, missing properties
-**Null/undefined**: Missing null checks, optional chaining
-**Async issues**: Missing await, promise not returned
+**Null/undefined**: Missing checks, optional chaining
+**Async**: Missing await, promise not returned
 **Mutations**: Modifying readonly data
-**Hook errors**: Using hooks (FORBIDDEN - use connect() HOC)
+**Hook errors**: Using hooks (replace with connect())
 **Test failures**: Mock issues, async timing, state leakage
-**Redux issues**: Direct mutations, missing actions
+**Redux**: Direct mutations, missing actions
 
 ## Quick Fixes
 
@@ -51,17 +51,14 @@ await act(async () => { await fn(); });
 
 // Type guard
 if ('error' in result) { /* handle error */ }
-
-// Redux immutable
-state.todos = [...state.todos, action.payload]; // Redux Toolkit allows this syntax
 ```
 
-## Debug Strategy
+## Strategy
 
-1. Read error message carefully
-2. Check file:line reference
+1. Read error message
+2. Check file:line
 3. Verify types match
 4. Check for mutations
 5. Ensure async/await correct
-6. Run single test in isolation
+6. Run test in isolation
 7. Check for hooks (replace with connect())

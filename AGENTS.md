@@ -1,287 +1,97 @@
 # todo2 Development Guidelines
 
-Auto-generated from all feature plans. Last updated: 2026-02-03
+**READ FIRST**: `.opencode/agents/STANDARDS.md` for coding rules
 
-## Active Technologies
+## Tech Stack
 
-- TypeScript 5.x / JavaScript ES2022 (001-todo-pwa-responsive)
-- React 18+ with Flux architecture (Redux Toolkit for state management)
+- TypeScript 5.x / JavaScript ES2022
+- React 18+ with Flux (Redux Toolkit + connect() HOC)
 - shadcn/ui for UI components
 
 ## Project Structure
 
 ```text
 src/
-  components/    # React UI components (presentational, props-only, NO HOOKS)
-  containers/    # HOC containers using connect() - NO HOOKS
-  store/         # Redux Toolkit slices (pure reducers)
-    slices/      # Feature-specific slices
-    store.ts     # Root store configuration
-  utils/         # Pure utility functions
-  types/         # TypeScript type definitions
-  services/      # Business logic (pure functions)
+  components/    # Pure UI (NO HOOKS)
+  containers/    # connect() HOC
+  store/         # Redux Toolkit slices
+    slices/
+    store.ts
+  utils/         # Pure functions
+  types/         # TypeScript types
+  services/      # Business logic
 tests/
-  unit/          # Unit tests (TDD/BDD)
-  integration/   # Integration tests
+  unit/
+  integration/
 .opencode/
-  agents/        # Specialized development agents
+  agents/        # Specialized agents
+    STANDARDS.md # Common coding rules
 ```
 
 ## Commands
 
+```bash
 npm test && npm run lint
+```
 
-## Development Philosophy
+## Core Principles
 
-### Core Principles (MANDATORY)
-1. **Test-Driven Development (TDD)**: Write tests before implementation
-2. **Functional Programming**: Pure functions, immutability, no side effects
-3. **SOLID Principles**: Single responsibility, dependency inversion, etc.
-4. **Minimal State**: Components use props, state lifted to containers
-5. **Type Safety**: Strict TypeScript, no `any` types
-6. **Flux Architecture**: Unidirectional data flow for state management
+1. **TDD**: Tests before implementation
+2. **Functional**: Pure functions, immutability, no side effects
+3. **SOLID**: Single responsibility, dependency inversion
+4. **No Hooks**: Redux + connect() HOC only
+5. **Type Safety**: Strict TypeScript, no `any`
+6. **Flux**: Unidirectional data flow
 
-## Code Style
-
-TypeScript 5.x / JavaScript ES2022: Follow standard conventions
-
-### TypeScript Standards
-- Strict mode enabled
-- No `any` types (use `unknown` + type guards)
-- Explicit return types for public APIs
-- Readonly properties for immutability
-- Discriminated unions for state machines
-- Branded types for domain IDs
-
-### Functional Programming
-- All functions must be pure (no side effects)
-- Use `const`, never `let` or `var`
-- Immutable data structures (`readonly`, `Readonly<T>`)
-- Prefer `map`, `filter`, `reduce` over loops
-- Function composition over inheritance
-- No classes for business logic (functions + data)
-
-### React Components
-- Functional components only (no class components)
-- **Presentational components**: Pure, stateless, receive all data via props
-- **Container components**: HOCs using `connect()` from react-redux (NO HOOKS)
-- **ZERO HOOKS ALLOWED**: No useState, useEffect, useContext, or custom hooks
-- **Exception**: Only React.memo for memoization (not a hook, but a HOC)
-- **Side-effect free**: Components must be pure functions of props
-- Destructure props immediately
-- Use TypeScript interfaces for props
-- shadcn/ui for UI components
-
-### Flux State Management (Redux Toolkit)
-- **Unidirectional data flow**: Actions → Store → Containers → Components
-- **Store structure**: Pure reducer functions, immutable state updates
-- **Container pattern**: HOCs subscribe to store, pass data as props to components
-- **No component state**: Lift all state to Redux store via containers
-- **Selectors**: Use pure selector functions for derived state
-- **Actions**: Pure functions that return action objects
-- **Example pattern**:
-  ```typescript
-  // Slice (src/store/slices/todoSlice.ts)
-  import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-  
-  interface TodoState {
-    readonly todos: readonly Todo[]
-  }
-  
-  const todoSlice = createSlice({
-    name: 'todo',
-    initialState: { todos: [] } as TodoState,
-    reducers: {
-      addTodo: (state, action: PayloadAction<Todo>) => {
-        state.todos = [...state.todos, action.payload]
-      }
-    }
-  })
-  
-  export const { addTodo } = todoSlice.actions
-  export default todoSlice.reducer
-  
-  // Store (src/store/store.ts)
-  import { configureStore } from '@reduxjs/toolkit'
-  import todoReducer from './slices/todoSlice'
-  
-  export const store = configureStore({
-    reducer: { todo: todoReducer }
-  })
-  
-  export type RootState = ReturnType<typeof store.getState>
-  export type AppDispatch = typeof store.dispatch
-  
-  // Container (src/containers/TodoListContainer.tsx)
-  import { connect } from 'react-redux'
-  import { TodoList } from '../components/TodoList'
-  import { addTodo } from '../store/slices/todoSlice'
-  import type { RootState, AppDispatch } from '../store/store'
-  
-  const mapStateToProps = (state: RootState) => ({
-    todos: state.todo.todos
-  })
-  
-  const mapDispatchToProps = (dispatch: AppDispatch) => ({
-    onAddTodo: (todo: Todo) => dispatch(addTodo(todo))
-  })
-  
-  export const TodoListContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(TodoList)
-  
-  // Component (src/components/TodoList.tsx)
-  interface TodoListProps {
-    readonly todos: readonly Todo[]
-    readonly onAddTodo: (todo: Todo) => void
-  }
-  
-  export const TodoList = ({ todos, onAddTodo }: TodoListProps) => (
-    <div>{todos.map(todo => <TodoItem key={todo.id} todo={todo} />)}</div>
-  )
-  ```
-
-### Testing
-- Write tests BEFORE implementation (TDD)
-- BDD naming: "should..." or "Given-When-Then"
-- 100% code coverage goal
-- Test edge cases and error paths
-- Use Result types for error handling
+See `STANDARDS.md` for detailed rules.
 
 ## Specialized Agents
 
-This project uses specialized agents for different development tasks. Each agent follows strict best practices and ensures code quality.
+### Core Development
+- **test-writer**: Write tests BEFORE code (TDD)
+- **logic-writer**: Business logic (pure functions)
+- **ui-writer**: React components (shadcn/ui, accessibility)
+- **test-runner**: Execute tests, analyze failures
+- **bugfixer**: Fix bugs systematically
+- **code-reviewer**: Review quality, standards compliance
+- **reviewer**: Validate architecture (SOLID, Flux)
 
-### Core Development Agents
+### Supporting
+- **refactorer**: Improve code quality (test-driven)
+- **documentation-writer**: TSDoc, README, ADRs
 
-#### 1. code-reviewer
-**Purpose**: Reviews code for quality, best practices, and architectural compliance  
-**When to use**: After writing code, before committing  
-**Focus**: Type safety, functional programming, SOLID principles, test coverage  
-**File**: `.opencode/agents/code-reviewer.md`
+## TDD Workflow
 
-#### 2. test-writer
-**Purpose**: Writes comprehensive tests following TDD/BDD practices  
-**When to use**: BEFORE writing implementation code  
-**Focus**: Unit tests, integration tests, edge cases, 100% coverage  
-**File**: `.opencode/agents/test-writer.md`
-
-#### 3. ui-writer
-**Purpose**: Creates React components using shadcn/ui with minimal state  
-**When to use**: When building UI components  
-**Focus**: Functional components, props over state, accessibility, shadcn patterns  
-**File**: `.opencode/agents/ui-writer.md`
-
-#### 4. logic-writer
-**Purpose**: Implements business logic using functional programming  
-**When to use**: When writing domain logic, utilities, or services  
-**Focus**: Pure functions, immutability, Result types, function composition  
-**File**: `.opencode/agents/logic-writer.md`
-
-#### 5. test-runner
-**Purpose**: Executes tests and analyzes results with detailed reporting  
-**When to use**: To run test suites and identify failures  
-**Focus**: Test execution, failure analysis, coverage reporting, root cause identification  
-**File**: `.opencode/agents/test-runner.md`
-
-#### 6. bugfixer
-**Purpose**: Fixes test failures and runtime bugs systematically  
-**When to use**: When tests fail or bugs are discovered  
-**Focus**: Root cause analysis, TDD bug fixing, regression prevention  
-**File**: `.opencode/agents/bugfixer.md`
-
-#### 7. reviewer
-**Purpose**: Validates architectural patterns and design principles  
-**When to use**: For architectural reviews and design validation  
-**Focus**: SOLID principles, Flux architecture, functional patterns, system design  
-**File**: `.opencode/agents/reviewer.md`
-
-### Supporting Agents
-
-#### 8. refactorer
-**Purpose**: Improves code quality while maintaining functionality  
-**When to use**: To clean up code, remove smells, improve structure  
-**Focus**: Test-driven refactoring, code smells, functional patterns  
-**File**: `.opencode/agents/refactorer.md`
-
-#### 9. documentation-writer
-**Purpose**: Creates clear, maintainable technical documentation  
-**When to use**: To document APIs, components, or architectural decisions  
-**Focus**: TSDoc, README files, ADRs, examples  
-**File**: `.opencode/agents/documentation-writer.md`
-
-## Development Workflow
-
-### 1. Feature Development (TDD Approach)
 ```bash
-# Step 1: Write tests first
-# Use: test-writer agent
+# 1. Write test (Red)
+test-writer agent
 
-# Step 2: Run tests (should fail - Red phase)
-# Use: test-runner agent
+# 2. Run test (should fail)
+test-runner agent
 
-# Step 3: Implement minimal code (Green phase)
-# Use: logic-writer or ui-writer agent
+# 3. Implement code (Green)
+logic-writer or ui-writer agent
 
-# Step 4: Run tests again (should pass)
-# Use: test-runner agent
+# 4. Run test (should pass)
+test-runner agent
 
-# Step 5: Refactor while keeping tests green
-# Use: refactorer agent
+# 5. Refactor
+refactorer agent
 
-# Step 6: Review code quality
-# Use: code-reviewer agent
-
-# Step 7: Validate architecture
-# Use: reviewer agent
+# 6. Review
+code-reviewer agent
+reviewer agent
 ```
 
-### 2. Bug Fixing
-```bash
-# Step 1: Run tests to reproduce bug
-# Use: test-runner agent
+## Quality Metrics
 
-# Step 2: Write failing test that captures bug
-# Use: test-writer agent
+- **Coverage**: 100% goal (min 90%)
+- **Function length**: Max 20 lines (15 preferred)
+- **Parameters**: Max 3
+- **Complexity**: Max 5
+- **No duplication**: DRY
 
-# Step 3: Fix the bug
-# Use: bugfixer agent
-
-# Step 4: Verify tests pass
-# Use: test-runner agent
-
-# Step 5: Review fix
-# Use: code-reviewer agent
-```
-
-### 3. Code Review
-```bash
-# Step 1: Review code quality
-# Use: code-reviewer agent
-
-# Step 2: Validate architecture
-# Use: reviewer agent
-
-# Step 3: Check test coverage
-# Use: test-runner agent
-```
-
-## Quality Standards
-
-### Code Quality Metrics
-- **Test Coverage**: 100% goal (minimum 90%)
-- **Function Length**: Max 20 lines (15 preferred)
-- **Parameters**: Max 3 (use object parameter for more)
-- **Cyclomatic Complexity**: Max 5
-- **No magic numbers**: Extract to named constants
-- **No code duplication**: DRY principle
-
-### Performance Standards
-- **Bundle size**: Monitor and optimize
-- **Component re-renders**: Minimize with memoization
-- **Test speed**: Unit tests < 100ms each
-- **Build time**: Keep under 30 seconds
+See `STANDARDS.md` for violations/patterns.
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

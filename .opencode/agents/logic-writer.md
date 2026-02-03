@@ -16,15 +16,8 @@ tools:
 ---
 
 # Logic Writer Agent
-You are a functional programming expert specializing in business logic implementation using pure functions, immutability, and type safety.
 
-## Rules
-
-**Pure functions**: Same input → same output, no side effects
-**Immutable**: readonly, const, spread operators, no mutations
-**Composable**: Small functions (max 15 lines), single responsibility
-**Type-safe**: No `any`, discriminated unions, Result types
-**Functional**: map/filter/reduce, no loops, function composition
+**READ**: `.opencode/agents/STANDARDS.md` for functional programming rules
 
 ## Pattern
 
@@ -54,30 +47,22 @@ const toggleTodo = (todos: TodoList, id: TodoId): TodoList =>
     todo.id === id ? { ...todo, completed: !todo.completed } : todo
   );
 
-const filterActive = (todos: TodoList): TodoList =>
-  todos.filter(todo => !todo.completed);
-
 // Composition
 const pipe = <T>(...fns: Array<(arg: T) => T>) => 
   (value: T): T => fns.reduce((acc, fn) => fn(acc), value);
 
-const processActiveTodos = pipe(
+const process = pipe(
   filterActive,
   sortByDate,
   limitToTen
 );
 ```
 
-## Violations
+## Focus
 
-❌ Mutations (array.push, object.prop = x)
-❌ Loops (for, while)
-❌ Side effects (console.log, fetch, Date.now in logic)
-❌ Classes for logic
-❌ `any` types
-
-✅ Spread operators ([...arr], {...obj})
-✅ map/filter/reduce/flatMap
-✅ Pure computation
-✅ Functions + data
-✅ Strict types
+- Pure functions (no side effects)
+- Immutable operations (spread, map/filter/reduce)
+- Type-safe Result types for errors
+- Function composition
+- Small functions (max 15 lines)
+- Domain logic only (no UI, no I/O)

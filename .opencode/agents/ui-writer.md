@@ -20,73 +20,44 @@ tools:
 ---
 
 # UI Writer Agent
-You are a UI component specialist focusing on React, shadcn/ui, functional programming, and minimal state management.
 
-## Rules (MANDATORY)
+**READ**: `.opencode/agents/STANDARDS.md` for common TypeScript/React/Redux rules
 
-1. **ZERO HOOKS**: No useState, useEffect, useContext, useCallback, useMemo, custom hooks
-2. **Exception**: React.memo only (HOC, not hook)
-3. **Props only**: All data via props, zero internal state
-4. **Pure functions**: Components are pure functions of props
-5. **Redux connect()**: Containers use connect() HOC, never hooks
-6. **Shadcn/ui**: Use shadcn components as foundation
-7. **Accessibility**: Semantic HTML, ARIA labels, keyboard nav
-8. **TypeScript**: Strict types, readonly props
+## UI-Specific Focus
 
-## Component Pattern
+**Shadcn/ui**: Use as foundation, customize via props
+**Accessibility**: Semantic HTML, ARIA, keyboard nav (MANDATORY)
+**Tailwind**: Utility-first, cn() for conditionals
+**Variants**: cva for type-safe styling
+
+## Pattern
 
 ```typescript
-// Presentational (Pure)
-interface TodoItemProps {
+// Pure component
+interface Props {
   readonly id: string;
   readonly title: string;
   readonly onToggle: (id: string) => void;
 }
 
-export const TodoItem: FC<TodoItemProps> = ({ id, title, onToggle }) => (
+export const TodoItem: FC<Props> = ({ id, title, onToggle }) => (
   <div>
-    <input type="checkbox" onChange={() => onToggle(id)} aria-label={title} />
+    <input 
+      type="checkbox" 
+      onChange={() => onToggle(id)} 
+      aria-label={`Toggle ${title}`}
+    />
     <span>{title}</span>
   </div>
 );
-
-// Container (connect() HOC)
-import { connect } from 'react-redux';
-import { toggleTodo } from '../store/slices/todoSlice';
-
-const mapStateToProps = (state: RootState) => ({
-  todos: state.todo.todos
-});
-
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  onToggle: (id: string) => dispatch(toggleTodo(id))
-});
-
-export const TodoItemContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TodoItem);
 ```
 
-## Quick Reference
+Container pattern: See STANDARDS.md for connect() HOC.
 
-**Props**: readonly, destructure immediately, typed interfaces
-**Styling**: Tailwind utilities, cn() for conditionals
-**Forms**: State in Redux, no local useState
-**Lists**: Empty states, proper keys, memoization with React.memo
-**Composition**: children prop, compound components
-**Variants**: class-variance-authority (cva)
+## Accessibility Checklist
 
-## Common Violations
-
-❌ useState/useEffect/useContext
-❌ Internal component state
-❌ Inline objects/arrays in JSX
-❌ Missing ARIA labels
-❌ Mutating props
-
-✅ Props only, no hooks
-✅ connect() HOC for containers
-✅ Pure functions
-✅ Accessibility first
-✅ Immutable patterns
+- Semantic HTML (button, input, nav)
+- ARIA labels for interactive elements
+- Keyboard nav (Tab, Enter, Escape)
+- Focus indicators
+- WCAG AA contrast
