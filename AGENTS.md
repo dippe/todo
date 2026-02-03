@@ -95,3 +95,10 @@ See `STANDARDS.md` for violations/patterns.
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
+
+## Active Technologies
+- TypeScript 5.x (strict mode), JavaScript ES2022 + React 18+, Redux Toolkit, shadcn/ui, Tailwind CSS (001-todo-pwa-app)
+- Browser LocalStorage for persistence (in-memory runtime with sync to LocalStorage) (001-todo-pwa-app)
+
+## Recent Changes
+- 001-todo-pwa-app: Added TypeScript 5.x (strict mode), JavaScript ES2022 + React 18+, Redux Toolkit, shadcn/ui, Tailwind CSS

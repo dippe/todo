@@ -1,0 +1,13 @@
+/speckit.constitution Create principles focused on simplicity,  single responsibility, code quality, testing standards, user experience consistency, and performance requirements and security.
+PWA client side only typescript application using shadcn for UI components.
+ Every new feature is implemented like a library in separated directory and a single entry point. 
+Always use Context7 MCP when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.
+Use the shadcn MCP server to browse, search, and install UI components.
+before making decisions do a web reseARCH for best practices.
+
+
+/speckit.specify TODO app. running in browser PWA in memory database. Responsive design useful on mobile and desktop browser.
+
+/speckit.plan react app, shadcn ui, read the .opencode\agents\STANDARDS.md logic-writer.md and ui-writer.md file, typescript, tdd, npm, single package, library like directory structure without monorepo. separated view layer from business logic. e2e tests playwright.
+
+
