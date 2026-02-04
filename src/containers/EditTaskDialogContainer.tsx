@@ -5,9 +5,11 @@ import {
   updateTask,
   setEditingId,
   setEditingValue,
+  type UpdateTaskPayload,
 } from '@/store/slices/tasksSlice';
 import type { RootState } from '@/types/state';
 import type { AppDispatch } from '@/store/store';
+import type { TaskId } from '@/types/task';
 
 const mapStateToProps = (state: RootState) => {
   const editingId = state.taskList.editingId;
@@ -21,8 +23,8 @@ const mapStateToProps = (state: RootState) => {
 };
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  updateTask,
-  setEditingId,
+  onUpdateTask: (payload: UpdateTaskPayload) => dispatch(updateTask(payload)),
+  onSetEditingId: (id: TaskId | null) => dispatch(setEditingId(id)),
   onEditingValueChange: (value: string) => dispatch(setEditingValue(value)),
 });
 
@@ -34,8 +36,8 @@ const EditTaskDialogContainer: React.FC<PropsFromRedux> = ({
   open,
   editingId,
   editingValue,
-  updateTask,
-  setEditingId,
+  onUpdateTask,
+  onSetEditingId,
   onEditingValueChange,
 }) => {
   const handleSave = (title: string): void => {
@@ -50,14 +52,14 @@ const EditTaskDialogContainer: React.FC<PropsFromRedux> = ({
     }
 
     // Dispatch updateTask with id and new title
-    updateTask({ id: editingId, title: trimmedTitle });
+    onUpdateTask({ id: editingId, title: trimmedTitle });
 
     // Close dialog
-    setEditingId(null);
+    onSetEditingId(null);
   };
 
   const handleCancel = (): void => {
-    setEditingId(null);
+    onSetEditingId(null);
   };
 
   return (
