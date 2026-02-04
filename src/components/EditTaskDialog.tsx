@@ -1,16 +1,17 @@
 import React from 'react';
-import { Task } from '@/types/task';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import { TaskForm } from './TaskForm';
 
 interface EditTaskDialogProps {
   readonly open: boolean;
-  readonly task: Task | undefined;
+  readonly value: string;
+  readonly onChange: (value: string) => void;
   readonly onSave: (title: string) => void;
   readonly onCancel: () => void;
 }
@@ -20,7 +21,8 @@ interface EditTaskDialogProps {
  * A modal dialog for editing an existing task title
  *
  * @param open - Controls dialog visibility
- * @param task - Task to edit (null when dialog should not render)
+ * @param value - Current input value
+ * @param onChange - Callback when input changes
  * @param onSave - Callback when user saves with new title
  * @param onCancel - Callback when user cancels editing
  *
@@ -29,38 +31,31 @@ interface EditTaskDialogProps {
  * - Validates non-empty, non-whitespace input
  * - Accessible with ARIA attributes and keyboard navigation (Enter/Escape)
  * - Auto-focuses input when opened (handled by TaskForm)
- * - Returns null if no task provided
  */
 export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
   open,
-  task,
+  value,
+  onChange,
   onSave,
   onCancel,
 }) => {
-  // Return null if no task is provided
-  if (!task) {
-    return null;
-  }
-
   const handleSubmit = (title: string): void => {
     onSave(title);
   };
 
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onCancel()}>
-      <DialogContent
-        aria-describedby="edit-task-description"
-        className="sm:max-w-[425px]"
-      >
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle id="edit-task-title">Edit Task</DialogTitle>
-          <span id="edit-task-description" className="sr-only">
+          <DialogDescription id="edit-task-description">
             Edit the title of your task
-          </span>
+          </DialogDescription>
         </DialogHeader>
         <TaskForm
           mode="edit"
-          initialValue={task.title}
+          value={value}
+          onChange={onChange}
           onSubmit={handleSubmit}
           onCancel={onCancel}
           submitLabel="Save"

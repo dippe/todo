@@ -80,10 +80,17 @@ const tasksSlice = createSlice({
     setEditingId: (
       state,
       action: PayloadAction<TaskId | null>
-    ): TaskListState => ({
-      ...state,
-      editingId: action.payload,
-    }),
+    ): TaskListState => {
+      const editingId = action.payload;
+      const task = editingId
+        ? state.items.find((t) => t.id === editingId)
+        : null;
+      return {
+        ...state,
+        editingId,
+        editingValue: task ? task.title : '',
+      };
+    },
 
     loadTasks: (state, action: PayloadAction<TaskList>): TaskListState => ({
       ...state,
@@ -93,6 +100,21 @@ const tasksSlice = createSlice({
     clearCompleted: (state): TaskListState => ({
       ...state,
       items: state.items.filter((task) => !task.completed),
+    }),
+
+    setFormInput: (state, action: PayloadAction<string>): TaskListState => ({
+      ...state,
+      formInput: action.payload,
+    }),
+
+    clearFormInput: (state): TaskListState => ({
+      ...state,
+      formInput: '',
+    }),
+
+    setEditingValue: (state, action: PayloadAction<string>): TaskListState => ({
+      ...state,
+      editingValue: action.payload,
     }),
   },
 });
@@ -106,6 +128,9 @@ export const {
   setEditingId,
   loadTasks,
   clearCompleted,
+  setFormInput,
+  clearFormInput,
+  setEditingValue,
 } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

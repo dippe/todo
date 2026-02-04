@@ -1,8 +1,13 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { EditTaskDialog } from '@/components/EditTaskDialog';
-import { updateTask, setEditingId } from '@/store/slices/tasksSlice';
+import {
+  updateTask,
+  setEditingId,
+  setEditingValue,
+} from '@/store/slices/tasksSlice';
 import type { RootState } from '@/types/state';
+import type { AppDispatch } from '@/store/store';
 
 const mapStateToProps = (state: RootState) => {
   const editingId = state.taskList.editingId;
@@ -16,13 +21,15 @@ const mapStateToProps = (state: RootState) => {
     task,
     open,
     editingId,
+    editingValue: state.taskList.editingValue,
   };
 };
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
   updateTask,
   setEditingId,
-};
+  onEditingValueChange: (value: string) => dispatch(setEditingValue(value)),
+});
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
@@ -32,8 +39,10 @@ const EditTaskDialogContainer: React.FC<PropsFromRedux> = ({
   task,
   open,
   editingId,
+  editingValue,
   updateTask,
   setEditingId,
+  onEditingValueChange,
 }) => {
   const handleSave = (title: string): void => {
     if (editingId === null) {
@@ -59,7 +68,8 @@ const EditTaskDialogContainer: React.FC<PropsFromRedux> = ({
 
   return (
     <EditTaskDialog
-      task={task}
+      value={editingValue}
+      onChange={onEditingValueChange}
       open={open}
       onSave={handleSave}
       onCancel={handleCancel}

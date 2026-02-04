@@ -5,6 +5,16 @@ test.describe('Task Completion Toggle', () => {
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
     await page.reload();
+    // Mock crypto for the app
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'crypto', {
+        value: {
+          randomUUID: () => '550e8400-e29b-41d4-a716-446655440000',
+          getRandomValues: (array: any) => array,
+          random: Math.random,
+        },
+      });
+    });
   });
 
   test('should toggle uncompleted task to completed', async ({ page }) => {

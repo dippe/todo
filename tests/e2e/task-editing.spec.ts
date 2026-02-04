@@ -3,8 +3,19 @@ import { test, expect } from '@playwright/test';
 test.describe('Task Editing Flow', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
+    // Clear localStorage to ensure clean state
     await page.evaluate(() => localStorage.clear());
     await page.reload();
+    // Mock crypto for the app
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'crypto', {
+        value: {
+          randomUUID: () => '550e8400-e29b-41d4-a716-446655440000',
+          getRandomValues: (array: any) => array,
+          random: Math.random,
+        },
+      });
+    });
   });
 
   test('should open edit dialog when clicking edit button', async ({
@@ -304,6 +315,16 @@ test.describe('Edit Task Validation', () => {
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
     await page.reload();
+    // Mock crypto for the app
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'crypto', {
+        value: {
+          randomUUID: () => '550e8400-e29b-41d4-a716-446655440000',
+          getRandomValues: (array: any) => array,
+          random: Math.random,
+        },
+      });
+    });
   });
 
   test('should not save task with empty title', async ({ page }) => {
@@ -478,6 +499,16 @@ test.describe('Edit Task Cancellation', () => {
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
     await page.reload();
+    // Mock crypto for the app
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'crypto', {
+        value: {
+          randomUUID: () => '550e8400-e29b-41d4-a716-446655440000',
+          getRandomValues: (array: any) => array,
+          random: Math.random,
+        },
+      });
+    });
   });
 
   test('should cancel edit and preserve original text', async ({ page }) => {

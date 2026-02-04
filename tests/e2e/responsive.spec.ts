@@ -5,6 +5,16 @@ test.describe('Responsive Layout Tests', () => {
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
     await page.reload();
+    // Mock crypto for the app
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'crypto', {
+        value: {
+          randomUUID: () => '550e8400-e29b-41d4-a716-446655440000',
+          getRandomValues: (array: any) => array,
+          random: Math.random,
+        },
+      });
+    });
   });
 
   test('should display mobile layout on 320px viewport', async ({ page }) => {
@@ -357,16 +367,18 @@ test.describe('Touch Target Size Tests', () => {
 });
 
 test.describe('Orientation Change Tests', () => {
-  test('should handle portrait to landscape orientation change', async ({ page }) => {
+  test('should handle portrait to landscape orientation change', async ({
+    page,
+  }) => {
     // Arrange - Start in portrait
     await page.goto('/');
     await page.setViewportSize({ width: 375, height: 667 });
     await page.evaluate(() => localStorage.clear());
     await page.reload();
-    
+
     const taskInput = page.getByRole('textbox', { name: /add task/i });
     const submitButton = page.getByRole('button', { name: /add task/i });
-    
+
     await taskInput.fill('Portrait task');
     await submitButton.click();
 
@@ -375,23 +387,25 @@ test.describe('Orientation Change Tests', () => {
 
     // Assert - Task should still be visible
     await expect(page.getByText('Portrait task')).toBeVisible();
-    
+
     // Should be able to create new tasks
     await taskInput.fill('Landscape task');
     await submitButton.click();
     await expect(page.getByText('Landscape task')).toBeVisible();
   });
 
-  test('should handle landscape to portrait orientation change', async ({ page }) => {
+  test('should handle landscape to portrait orientation change', async ({
+    page,
+  }) => {
     // Arrange - Start in landscape
     await page.goto('/');
     await page.setViewportSize({ width: 667, height: 375 });
     await page.evaluate(() => localStorage.clear());
     await page.reload();
-    
+
     const taskInput = page.getByRole('textbox', { name: /add task/i });
     const submitButton = page.getByRole('button', { name: /add task/i });
-    
+
     await taskInput.fill('Landscape first');
     await submitButton.click();
 
@@ -400,24 +414,26 @@ test.describe('Orientation Change Tests', () => {
 
     // Assert - Task should still be visible
     await expect(page.getByText('Landscape first')).toBeVisible();
-    
+
     // Should be able to create new tasks
     await taskInput.fill('Portrait after rotate');
     await submitButton.click();
     await expect(page.getByText('Portrait after rotate')).toBeVisible();
   });
 
-  test('should preserve task state during orientation changes', async ({ page }) => {
+  test('should preserve task state during orientation changes', async ({
+    page,
+  }) => {
     // Arrange - Create multiple tasks in portrait
     await page.goto('/');
     await page.setViewportSize({ width: 375, height: 667 });
     await page.evaluate(() => localStorage.clear());
     await page.reload();
-    
+
     const tasks = ['Task 1', 'Task 2', 'Task 3'];
     const taskInput = page.getByRole('textbox', { name: /add task/i });
     const submitButton = page.getByRole('button', { name: /add task/i });
-    
+
     for (const task of tasks) {
       await taskInput.fill(task);
       await submitButton.click();
@@ -434,16 +450,18 @@ test.describe('Orientation Change Tests', () => {
     }
   });
 
-  test('should maintain touch targets after orientation change', async ({ page }) => {
+  test('should maintain touch targets after orientation change', async ({
+    page,
+  }) => {
     // Arrange - Portrait with task
     await page.goto('/');
     await page.setViewportSize({ width: 375, height: 667 });
     await page.evaluate(() => localStorage.clear());
     await page.reload();
-    
+
     const taskInput = page.getByRole('textbox', { name: /add task/i });
     const submitButton = page.getByRole('button', { name: /add task/i });
-    
+
     await taskInput.fill('Touch target test');
     await submitButton.click();
 
@@ -453,7 +471,7 @@ test.describe('Orientation Change Tests', () => {
     // Assert - Touch targets should still meet minimum size
     const checkbox = page.locator('[role="checkbox"]').first();
     const checkboxBox = await checkbox.boundingBox();
-    
+
     expect(checkboxBox).toBeTruthy();
     if (checkboxBox) {
       expect(checkboxBox.width).toBeGreaterThanOrEqual(44);
@@ -461,16 +479,18 @@ test.describe('Orientation Change Tests', () => {
     }
   });
 
-  test('should adapt layout from tablet portrait to landscape', async ({ page }) => {
+  test('should adapt layout from tablet portrait to landscape', async ({
+    page,
+  }) => {
     // Arrange - Tablet portrait
     await page.goto('/');
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.evaluate(() => localStorage.clear());
     await page.reload();
-    
+
     const taskInput = page.getByRole('textbox', { name: /add task/i });
     const submitButton = page.getByRole('button', { name: /add task/i });
-    
+
     await taskInput.fill('Tablet task');
     await submitButton.click();
 
@@ -479,14 +499,14 @@ test.describe('Orientation Change Tests', () => {
 
     // Assert - Layout should adapt
     await expect(page.getByText('Tablet task')).toBeVisible();
-    
+
     // Form elements should be horizontal in landscape tablet
     const inputBox = await taskInput.boundingBox();
     const buttonBox = await submitButton.boundingBox();
-    
+
     expect(inputBox).toBeTruthy();
     expect(buttonBox).toBeTruthy();
-    
+
     if (inputBox && buttonBox) {
       // Should be roughly horizontal
       const yDifference = Math.abs(buttonBox.y - inputBox.y);

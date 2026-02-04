@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 interface TaskFormProps {
   readonly mode: 'create' | 'edit';
-  readonly initialValue?: string;
+  readonly value: string;
+  readonly onChange: (value: string) => void;
   readonly onSubmit: (title: string) => void;
   readonly onCancel?: () => void;
   readonly submitLabel: string;
@@ -13,14 +14,13 @@ interface TaskFormProps {
 
 export const TaskForm: React.FC<TaskFormProps> = ({
   mode,
-  initialValue = '',
+  value,
+  onChange,
   onSubmit,
   onCancel,
   submitLabel,
   placeholder = 'What needs to be done?',
 }) => {
-  const [value, setValue] = useState(initialValue);
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const title = value.trim();
@@ -30,10 +30,6 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     }
 
     onSubmit(title);
-
-    if (mode === 'create') {
-      setValue('');
-    }
   };
 
   return (
@@ -45,7 +41,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       <Input
         type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-label={mode === 'create' ? 'Add task' : 'Edit task title'}
         className="flex-1 min-h-[44px] touch-manipulation"
@@ -76,5 +72,3 @@ export const TaskForm: React.FC<TaskFormProps> = ({
 };
 
 TaskForm.displayName = 'TaskForm';
-
-export default TaskForm;

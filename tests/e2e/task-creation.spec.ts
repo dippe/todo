@@ -6,6 +6,11 @@ test.describe('Task Creation Flow', () => {
     // Clear localStorage to ensure clean state
     await page.evaluate(() => localStorage.clear());
     await page.reload();
+    // Mock crypto for the app
+    await page.addInitScript(() => {
+      if (!window.crypto) (window as any).crypto = {};
+      window.crypto.randomUUID = () => '550e8400-e29b-41d4-a716-446655440000';
+    });
   });
 
   test('should create a new task and display it in the list', async ({

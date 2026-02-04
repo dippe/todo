@@ -25,6 +25,10 @@ export interface TaskListState {
   readonly filter: TaskFilter;
   /** ID of the task currently being edited, or null if none */
   readonly editingId: TaskId | null;
+  /** Current form input value */
+  readonly formInput: string;
+  /** Current editing input value */
+  readonly editingValue: string;
 }
 
 /**
@@ -57,8 +61,7 @@ export interface TaskListMetrics {
  */
 export function isTaskFilter(value: unknown): value is TaskFilter {
   return (
-    typeof value === 'string' &&
-    VALID_FILTERS.includes(value as TaskFilter)
+    typeof value === 'string' && VALID_FILTERS.includes(value as TaskFilter)
   );
 }
 
@@ -71,6 +74,8 @@ export function createInitialTaskListState(): TaskListState {
     items: [],
     filter: 'all',
     editingId: null,
+    formInput: '',
+    editingValue: '',
   };
 }
 
