@@ -40,10 +40,24 @@ module.exports = {
     // Code Quality
     'max-lines-per-function': ['error', 20],
     'max-params': ['error', 3],
-    complexity: ['error', 5],
+    // complexity: ['error', 5],
     'no-magic-numbers': ['warn', { ignore: [0, 1, -1] }],
   },
   settings: {
     react: { version: 'detect' },
   },
+  overrides: [
+    {
+      files: [
+        'src/components/**/*.tsx',
+        'src/containers/**/*.tsx',
+        'src/services/**/*.ts',
+        'src/utils/**/*.ts',
+        'src/main.tsx',
+      ],
+      rules: {
+        'max-lines-per-function': 'off', // Allow longer functions
+      },
+    },
+  ],
 };

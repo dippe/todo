@@ -12,6 +12,37 @@ interface TaskFormProps {
   readonly placeholder?: string;
 }
 
+const getAriaLabel = (mode: 'create' | 'edit'): string =>
+  mode === 'create' ? 'Add task' : 'Edit task title';
+
+const FormButtons: React.FC<{
+  readonly submitLabel: string;
+  readonly onCancel?: () => void;
+}> = ({ submitLabel, onCancel }) => (
+  <div className="flex gap-2 w-full sm:w-auto">
+    <Button
+      type="submit"
+      aria-label={submitLabel}
+      className="min-h-[44px] min-w-[44px] flex-1 sm:flex-none touch-manipulation"
+    >
+      {submitLabel}
+    </Button>
+    {onCancel && (
+      <Button
+        type="button"
+        variant="outline"
+        onClick={onCancel}
+        aria-label="Cancel"
+        className="min-h-[44px] min-w-[44px] flex-1 sm:flex-none touch-manipulation"
+      >
+        Cancel
+      </Button>
+    )}
+  </div>
+);
+
+FormButtons.displayName = 'FormButtons';
+
 export const TaskForm: React.FC<TaskFormProps> = ({
   mode,
   value,
@@ -32,41 +63,25 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     onSubmit(title);
   };
 
+  const formAriaLabel = mode === 'create' ? 'Add new task' : 'Edit task';
+  const inputAriaLabel = getAriaLabel(mode);
+
   return (
     <form
       onSubmit={handleSubmit}
       className="flex w-full flex-col gap-3 sm:flex-row sm:items-center"
-      aria-label={mode === 'create' ? 'Add new task' : 'Edit task'}
+      aria-label={formAriaLabel}
     >
       <Input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        aria-label={mode === 'create' ? 'Add task' : 'Edit task title'}
+        aria-label={inputAriaLabel}
         className="flex-1 min-h-[44px] touch-manipulation"
         maxLength={500}
       />
-      <div className="flex gap-2 w-full sm:w-auto">
-        <Button
-          type="submit"
-          aria-label={submitLabel}
-          className="min-h-[44px] min-w-[44px] flex-1 sm:flex-none touch-manipulation"
-        >
-          {submitLabel}
-        </Button>
-        {onCancel && (
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onCancel}
-            aria-label="Cancel"
-            className="min-h-[44px] min-w-[44px] flex-1 sm:flex-none touch-manipulation"
-          >
-            Cancel
-          </Button>
-        )}
-      </div>
+      <FormButtons submitLabel={submitLabel} onCancel={onCancel} />
     </form>
   );
 };
