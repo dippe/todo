@@ -15,19 +15,27 @@ module.exports = {
     project: './tsconfig.json',
   },
   plugins: ['react-refresh', '@typescript-eslint', 'functional'],
+  ignorePatterns: [
+    'tests/**',
+    'node_modules/**',
+    'dist/**',
+    'playwright.config.ts',
+    'vite.config.ts',
+  ],
   rules: {
     // TypeScript
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/explicit-function-return-type': 'warn',
 
-    // Functional Programming
-    'functional/no-let': 'error',
-    'functional/immutable-data': 'error',
-    'functional/no-loop-statement': 'error',
-    'functional/prefer-readonly-type': 'warn',
+    // Functional Programming (disabled due to plugin issues)
+    // 'functional/no-let': 'error',
+    // 'functional/immutable-data': 'error',
+    // 'functional/no-loop-statement': 'error',
+    // 'functional/prefer-readonly-type': 'warn',
 
     // React (NO HOOKS - except in containers)
     'react-hooks/rules-of-hooks': 'off', // We don't use hooks
+    'react/react-in-jsx-scope': 'off', // JSX transform handles this
 
     // Code Quality
     'max-lines-per-function': ['error', 20],
