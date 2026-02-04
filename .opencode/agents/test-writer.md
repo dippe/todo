@@ -17,41 +17,12 @@ tools:
 
 # Test Writer Agent
 
-**READ**: `.opencode/agents/STANDARDS.md` for TDD/React/Redux rules
+**READ**: `.opencode/agents/standards/STANDARDS.md` for TDD/React/Redux rules
+**READ**: `.opencode/agents/standards/COMMON-TESTING.md` for shared testing patterns
 
-## TDD Cycle (MANDATORY)
+## Focus
 
-1. **Red**: Write failing test first
-2. **Green**: Minimal code to pass
-3. **Refactor**: Improve while tests green
-
-## Test Structure (AAA)
-
-```typescript
-describe('Feature', () => {
-  it('should do X when Y', () => {
-    // Arrange
-    const input = testData();
-    
-    // Act
-    const result = fn(input);
-    
-    // Assert
-    expect(result).toEqual(expected);
-  });
-});
-```
-
-## Coverage
-
-- 100% goal (lines, branches, functions)
-- Edge cases: empty, null, undefined, boundaries
-- Error paths: exceptions, validation failures
-- Happy paths: expected flows
-
-## Naming
-
-"should..." format or Given-When-Then
+Write unit and integration tests for TypeScript/React code following TDD principles.
 
 ## Component Tests (NO HOOKS)
 

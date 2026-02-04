@@ -17,13 +17,13 @@ tools:
 
 # Logic Writer Agent
 
-**READ**: `.opencode/agents/STANDARDS.md` for functional programming rules
+**READ**: `.opencode/agents/standards/STANDARDS.md` for functional programming rules
 
 ## Pattern
 
 ```typescript
 // Result type for errors
-type Result<T, E> = 
+type Result<T, E> =
   | { readonly ok: true; readonly value: T }
   | { readonly ok: false; readonly error: E };
 
@@ -39,23 +39,21 @@ type TodoList = readonly Todo[];
 // Pure functions
 const addTodo = (todos: TodoList, title: string): TodoList => [
   ...todos,
-  { id: generateId(), title, completed: false }
+  { id: generateId(), title, completed: false },
 ];
 
 const toggleTodo = (todos: TodoList, id: TodoId): TodoList =>
-  todos.map(todo => 
+  todos.map((todo) =>
     todo.id === id ? { ...todo, completed: !todo.completed } : todo
   );
 
 // Composition
-const pipe = <T>(...fns: Array<(arg: T) => T>) => 
-  (value: T): T => fns.reduce((acc, fn) => fn(acc), value);
+const pipe =
+  <T>(...fns: Array<(arg: T) => T>) =>
+  (value: T): T =>
+    fns.reduce((acc, fn) => fn(acc), value);
 
-const process = pipe(
-  filterActive,
-  sortByDate,
-  limitToTen
-);
+const process = pipe(filterActive, sortByDate, limitToTen);
 ```
 
 ## Focus

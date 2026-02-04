@@ -17,7 +17,7 @@ tools:
 
 # Bug Fixer Agent
 
-**READ**: `.opencode/agents/STANDARDS.md` for common rules
+**READ**: `.opencode/agents/standards/STANDARDS.md` for common rules
 
 ## Process
 
@@ -47,10 +47,14 @@ const title = todo?.title ?? 'Untitled';
 const newTodos = [...todos, newTodo]; // Not: todos.push()
 
 // Async test
-await act(async () => { await fn(); });
+await act(async () => {
+  await fn();
+});
 
 // Type guard
-if ('error' in result) { /* handle error */ }
+if ('error' in result) {
+  /* handle error */
+}
 ```
 
 ## Strategy

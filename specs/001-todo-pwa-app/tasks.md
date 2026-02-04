@@ -209,25 +209,25 @@
 
 ### Tests for User Story 5 (TDD)
 
-- [ ] T099 [P] [US5] Write E2E test for offline functionality in tests/e2e/offline.spec.ts (network throttling)
-- [ ] T100 [P] [US5] Write E2E test for service worker installation in tests/e2e/offline.spec.ts
-- [ ] T101 [P] [US5] Write E2E test for cached resource loading in tests/e2e/offline.spec.ts
-- [ ] T102 [P] [US5] Write E2E test for PWA installability in tests/e2e/offline.spec.ts
+- [x] T099 [P] [US5] Write E2E test for offline functionality in tests/e2e/offline.spec.ts (network throttling)
+- [x] T100 [P] [US5] Write E2E test for service worker installation in tests/e2e/offline.spec.ts
+- [x] T101 [P] [US5] Write E2E test for cached resource loading in tests/e2e/offline.spec.ts
+- [x] T102 [P] [US5] Write E2E test for PWA installability in tests/e2e/offline.spec.ts
 
 ### Implementation for User Story 5
 
-- [ ] T103 [P] [US5] Create PWA manifest.json in public/manifest.json (name, icons, display: standalone, start_url)
-- [ ] T104 [P] [US5] Create service worker in public/service-worker.js with cache-first strategy
-- [ ] T105 [US5] Implement service worker install event to cache static assets (/index.html, /main.js, /styles.css)
-- [ ] T106 [US5] Implement service worker fetch event with cache-first fallback
-- [ ] T107 [US5] Implement service worker activate event to clear old caches
-- [ ] T108 [US5] Register service worker in src/main.tsx (production only)
-- [ ] T109 [P] [US5] Create PWA icon assets in public/icons/ (192x192, 512x512)
-- [ ] T110 [US5] Add manifest link to index.html <head>
-- [ ] T111 [US5] Add theme-color meta tag to index.html
-- [ ] T112 [US5] Test offline create task (should work, stored in LocalStorage)
-- [ ] T113 [US5] Test offline toggle task (should work, stored in LocalStorage)
-- [ ] T114 [US5] Test offline delete task (should work, stored in LocalStorage)
+- [x] T103 [P] [US5] Create PWA manifest.json in public/manifest.json (name, icons, display: standalone, start_url)
+- [x] T104 [P] [US5] Create service worker in public/service-worker.js with cache-first strategy
+- [x] T105 [US5] Implement service worker install event to cache static assets (/index.html, /main.js, /styles.css)
+- [x] T106 [US5] Implement service worker fetch event with cache-first fallback
+- [x] T107 [US5] Implement service worker activate event to clear old caches
+- [x] T108 [US5] Register service worker in src/main.tsx (production only)
+- [x] T109 [P] [US5] Create PWA icon assets in public/icons/ (192x192, 512x512)
+- [x] T110 [US5] Add manifest link to index.html <head>
+- [x] T111 [US5] Add theme-color meta tag to index.html
+- [x] T112 [US5] Test offline create task (should work, stored in LocalStorage)
+- [x] T113 [US5] Test offline toggle task (should work, stored in LocalStorage)
+- [x] T114 [US5] Test offline delete task (should work, stored in LocalStorage)
 - [ ] T115 [US5] Test app install on mobile Safari (iOS)
 - [ ] T116 [US5] Test app install on Android Chrome
 - [ ] T117 [US5] Test app install on desktop browsers (Chrome, Edge)

@@ -17,6 +17,8 @@ tools:
 
 # Test Runner Agent
 
+**READ**: `.opencode/agents/standards/COMMON-TESTING.md` for shared testing patterns
+
 ## Commands
 
 ```bash

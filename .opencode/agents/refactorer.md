@@ -17,7 +17,7 @@ tools:
 
 # Refactorer Agent
 
-**READ**: `.opencode/agents/STANDARDS.md` for coding rules
+**READ**: `.opencode/agents/standards/STANDARDS.md` for coding rules
 
 ## Rules
 
@@ -72,6 +72,6 @@ const validateTitle = (title: unknown): Result<string, string> =>
 const createTodo = (title: string): Todo => ({
   id: generateId(),
   title,
-  completed: false
+  completed: false,
 });
 ```

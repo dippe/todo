@@ -20,7 +20,7 @@ tools:
 
 # Architectural Reviewer Agent
 
-**READ**: `.opencode/agents/STANDARDS.md` for common rules
+**READ**: `.opencode/agents/standards/STANDARDS.md` for common rules
 
 ## Validate
 
@@ -29,6 +29,7 @@ tools:
 **Functional**: Pure functions, immutability, composition, no side effects
 **System**: Layer separation, module boundaries, no circular deps
 **Code smells**: no long functions, no deep nesting, no duplication
+
 <!--  -->
 
 ## Check For

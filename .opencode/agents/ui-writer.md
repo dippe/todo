@@ -21,7 +21,7 @@ tools:
 
 # UI Writer Agent
 
-**READ**: `.opencode/agents/STANDARDS.md` for common TypeScript/React/Redux rules
+**READ**: `.opencode/agents/standards/STANDARDS.md` for common TypeScript/React/Redux rules
 
 ## UI-Specific Focus
 
@@ -42,9 +42,9 @@ interface Props {
 
 export const TodoItem: FC<Props> = ({ id, title, onToggle }) => (
   <div>
-    <input 
-      type="checkbox" 
-      onChange={() => onToggle(id)} 
+    <input
+      type="checkbox"
+      onChange={() => onToggle(id)}
       aria-label={`Toggle ${title}`}
     />
     <span>{title}</span>
@@ -52,7 +52,7 @@ export const TodoItem: FC<Props> = ({ id, title, onToggle }) => (
 );
 ```
 
-Container pattern: See STANDARDS.md for connect() HOC.
+Container pattern: See standards/STANDARDS.md for connect() HOC.
 
 ## Accessibility Checklist
 
