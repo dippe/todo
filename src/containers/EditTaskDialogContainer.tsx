@@ -11,14 +11,9 @@ import type { AppDispatch } from '@/store/store';
 
 const mapStateToProps = (state: RootState) => {
   const editingId = state.taskList.editingId;
-  const task =
-    editingId !== null
-      ? state.taskList.items.find((t) => t.id === editingId)
-      : undefined;
   const open = editingId !== null;
 
   return {
-    task,
     open,
     editingId,
     editingValue: state.taskList.editingValue,
@@ -36,7 +31,6 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const EditTaskDialogContainer: React.FC<PropsFromRedux> = ({
-  task,
   open,
   editingId,
   editingValue,

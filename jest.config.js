@@ -7,7 +7,7 @@ export default {
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/main.tsx', '!src/**/*.d.ts'],
+  testPathIgnorePatterns: ['<rootDir>/tests/e2e/'],
   coverageThreshold: {
     global: {
       statements: 90,

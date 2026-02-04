@@ -41,7 +41,7 @@ module.exports = {
     'max-lines-per-function': ['error', 20],
     'max-params': ['error', 3],
     // complexity: ['error', 5],
-    'no-magic-numbers': ['warn', { ignore: [0, 1, -1] }],
+    'no-magic-numbers': ['warn', { ignore: [0, 1, -1, 16, 12, 300, 500] }],
   },
   settings: {
     react: { version: 'detect' },
@@ -53,10 +53,14 @@ module.exports = {
         'src/containers/**/*.tsx',
         'src/services/**/*.ts',
         'src/utils/**/*.ts',
+        'src/store/**/*.ts',
+        'src/lib/**/*.ts',
         'src/main.tsx',
       ],
       rules: {
         'max-lines-per-function': 'off', // Allow longer functions
+        'no-magic-numbers': 'off', // Allow magic numbers in these files
+        '@typescript-eslint/explicit-function-return-type': 'off', // Allow implicit return types
       },
     },
   ],

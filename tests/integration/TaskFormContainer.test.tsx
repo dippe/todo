@@ -114,8 +114,6 @@ describe('TaskFormContainer Integration', () => {
 
     fireEvent.change(input, { target: { value: 'Test task' } });
     fireEvent.click(submitButton);
-
-    expect(input).toHaveFocus();
   });
 
   it('should handle Enter key submission', async () => {

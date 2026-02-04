@@ -12,7 +12,12 @@ import {
   createInitialTaskListState,
   createInitialRootState,
 } from '../../../src/types/state';
-import type { Task, TaskList, TaskId, Timestamp } from '../../../src/types/task';
+import type {
+  Task,
+  TaskList,
+  TaskId,
+  Timestamp,
+} from '../../../src/types/task';
 
 describe('State Types', () => {
   describe('TaskFilter', () => {
@@ -63,6 +68,8 @@ describe('State Types', () => {
         items: [],
         filter: 'all',
         editingId: null,
+        formInput: '',
+        editingValue: '',
       });
     });
 
@@ -82,6 +89,8 @@ describe('State Types', () => {
         items: tasks,
         filter: 'active',
         editingId: 'task-1' as TaskId,
+        formInput: '',
+        editingValue: '',
       };
 
       // Assert
@@ -96,6 +105,8 @@ describe('State Types', () => {
         items: [],
         filter: 'all',
         editingId: null,
+        formInput: '',
+        editingValue: '',
       };
 
       // Assert
@@ -123,6 +134,8 @@ describe('State Types', () => {
         items: [],
         filter: 'all',
         editingId: null,
+        formInput: '',
+        editingValue: '',
       });
     });
 
@@ -143,6 +156,8 @@ describe('State Types', () => {
           items: tasks,
           filter: 'completed',
           editingId: null,
+          formInput: '',
+          editingValue: '',
         },
       };
 
@@ -252,6 +267,16 @@ describe('State Types', () => {
       const state = createInitialTaskListState();
       expect(state.editingId).toBeNull();
     });
+
+    it('should return state with formInput set to empty string', () => {
+      const state = createInitialTaskListState();
+      expect(state.formInput).toBe('');
+    });
+
+    it('should return state with editingValue set to empty string', () => {
+      const state = createInitialTaskListState();
+      expect(state.editingValue).toBe('');
+    });
   });
 
   describe('createInitialRootState', () => {
@@ -265,6 +290,8 @@ describe('State Types', () => {
       expect(state.taskList.items).toEqual([]);
       expect(state.taskList.filter).toBe('all');
       expect(state.taskList.editingId).toBeNull();
+      expect(state.taskList.formInput).toBe('');
+      expect(state.taskList.editingValue).toBe('');
     });
   });
 });

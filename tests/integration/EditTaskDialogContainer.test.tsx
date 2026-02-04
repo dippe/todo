@@ -19,6 +19,20 @@ const createMockTask = (
   updatedAt: Date.now() as Task['updatedAt'],
 });
 
+const createTaskListState = (
+  tasks: Task[],
+  editingId: Task['id'] | null = null
+): TaskListState => {
+  const editingTask = editingId ? tasks.find((t) => t.id === editingId) : null;
+  return {
+    items: tasks,
+    filter: 'all',
+    editingId,
+    formInput: '',
+    editingValue: editingTask ? editingTask.title : '',
+  };
+};
+
 const createTestStore = (preloadedState?: Partial<RootState>) => {
   return configureStore({
     reducer: {
@@ -46,11 +60,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should not render dialog when no task is being edited', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Test Task')],
-        filter: 'all',
-        editingId: null,
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'Test Task')]),
     };
 
     renderWithProvider(<EditTaskDialogContainer />, initialState);
@@ -60,11 +70,10 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should render dialog when a task is being edited', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Edit me')],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState(
+        [createMockTask('1', 'Edit me')],
+        '1' as Task['id']
+      ),
     };
 
     renderWithProvider(<EditTaskDialogContainer />, initialState);
@@ -75,11 +84,10 @@ describe('EditTaskDialogContainer Integration', () => {
   it('should display task title in edit input', () => {
     const taskTitle = 'Task to edit';
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', taskTitle)],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState(
+        [createMockTask('1', taskTitle)],
+        '1' as Task['id']
+      ),
     };
 
     renderWithProvider(<EditTaskDialogContainer />, initialState);
@@ -92,11 +100,10 @@ describe('EditTaskDialogContainer Integration', () => {
     const originalTitle = 'Original title';
     const newTitle = 'Updated title';
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', originalTitle)],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState(
+        [createMockTask('1', originalTitle)],
+        '1' as Task['id']
+      ),
     };
 
     const { store } = renderWithProvider(
@@ -116,11 +123,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should close dialog after saving', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Test task')],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'Test task')], '1' as Task['id']),
     };
 
     const { store } = renderWithProvider(
@@ -140,11 +143,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should close dialog when canceling', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Test task')],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'Test task')], '1' as Task['id']),
     };
 
     const { store } = renderWithProvider(
@@ -162,11 +161,7 @@ describe('EditTaskDialogContainer Integration', () => {
   it('should not save changes when canceling', () => {
     const originalTitle = 'Original';
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', originalTitle)],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', originalTitle)], '1' as Task['id']),
     };
 
     const { store } = renderWithProvider(
@@ -187,11 +182,7 @@ describe('EditTaskDialogContainer Integration', () => {
   it('should not save task with empty title', () => {
     const originalTitle = 'Do not empty';
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', originalTitle)],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', originalTitle)], '1' as Task['id']),
     };
 
     const { store } = renderWithProvider(
@@ -212,11 +203,7 @@ describe('EditTaskDialogContainer Integration', () => {
   it('should not save task with whitespace-only title', () => {
     const originalTitle = 'Keep original';
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', originalTitle)],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', originalTitle)], '1' as Task['id']),
     };
 
     const { store } = renderWithProvider(
@@ -236,11 +223,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should trim whitespace from edited title', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Original')],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'Original')], '1' as Task['id']),
     };
 
     const { store } = renderWithProvider(
@@ -260,11 +243,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should disable save button when input is empty', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Test task')],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'Test task')], '1' as Task['id']),
     };
 
     renderWithProvider(<EditTaskDialogContainer />, initialState);
@@ -278,11 +257,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should disable save button when input is whitespace only', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Test task')],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'Test task')], '1' as Task['id']),
     };
 
     renderWithProvider(<EditTaskDialogContainer />, initialState);
@@ -298,11 +273,7 @@ describe('EditTaskDialogContainer Integration', () => {
     const originalTitle = 'Original';
     const newTitle = 'Updated with Enter';
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', originalTitle)],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', originalTitle)], '1' as Task['id']),
     };
 
     const { store } = renderWithProvider(
@@ -321,11 +292,7 @@ describe('EditTaskDialogContainer Integration', () => {
   it('should handle Escape key to cancel', () => {
     const originalTitle = 'Original';
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', originalTitle)],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', originalTitle)], '1' as Task['id']),
     };
 
     const { store } = renderWithProvider(
@@ -344,11 +311,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should preserve task completion status when editing', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Completed task', true)],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'Completed task', true)], '1' as Task['id']),
     };
 
     const { store } = renderWithProvider(
@@ -368,11 +331,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should focus input when dialog opens', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Focus test')],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'Focus test')], '1' as Task['id']),
     };
 
     renderWithProvider(<EditTaskDialogContainer />, initialState);
@@ -383,11 +342,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should have proper ARIA attributes', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'ARIA test')],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'ARIA test')], '1' as Task['id']),
     };
 
     renderWithProvider(<EditTaskDialogContainer />, initialState);
@@ -398,11 +353,7 @@ describe('EditTaskDialogContainer Integration', () => {
 
   it('should handle editing task that does not exist', () => {
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', 'Task 1')],
-        filter: 'all',
-        editingId: 'non-existent' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', 'Task 1')], 'non-existent' as Task['id']),
     };
 
     renderWithProvider(<EditTaskDialogContainer />, initialState);
@@ -422,11 +373,7 @@ describe('EditTaskDialogContainer Integration', () => {
   it('should select all text in input on focus', () => {
     const taskTitle = 'Select me';
     const initialState: Partial<RootState> = {
-      taskList: {
-        items: [createMockTask('1', taskTitle)],
-        filter: 'all',
-        editingId: '1' as Task['id'],
-      } as TaskListState,
+      taskList: createTaskListState([createMockTask('1', taskTitle)], '1' as Task['id']),
     };
 
     renderWithProvider(<EditTaskDialogContainer />, initialState);

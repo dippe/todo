@@ -8,8 +8,9 @@ test.describe('Task Creation Flow', () => {
     await page.reload();
     // Mock crypto for the app
     await page.addInitScript(() => {
-      if (!window.crypto) (window as any).crypto = {};
-      window.crypto.randomUUID = () => '550e8400-e29b-41d4-a716-446655440000';
+      (window as any).crypto = {
+        randomUUID: () => '550e8400-e29b-41d4-a716-446655440000',
+      };
     });
   });
 

@@ -13,7 +13,7 @@ import {
 
 let saveTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
-const persistenceMiddleware: Middleware<{}, AppRootState> =
+const persistenceMiddleware: Middleware<unknown, AppRootState> =
   (storeAPI) => (next) => (action: unknown) => {
     const prevState = storeAPI.getState();
     const result = next(action as Action);
