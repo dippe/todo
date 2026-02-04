@@ -131,3 +131,11 @@ Write `.spec.ts` files with:
 - Multiple tests (happy + edge + error)
 - Given-When-Then structure
 - Accessibility-first locators
+
+## Token Optimization
+
+When writing tests, AVOID generating code that produces large outputs:
+
+- ❌ NO `await page.screenshot()` (Let config handle failures)
+- ❌ NO `console.log(hugeObject)`
+- ✅ USE `expect` assertions (they provide concise diffs)

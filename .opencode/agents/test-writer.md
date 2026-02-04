@@ -47,3 +47,8 @@ it('should connect to Redux', () => {
 - Mock at boundaries only
 - Test behavior not implementation
 - Independent tests (no shared state)
+
+## Token Efficiency
+
+- ❌ AVOID `console.log()` in tests (clutters output)
+- ✅ rely on `expect` failures for feedback
