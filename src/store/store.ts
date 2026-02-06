@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 import tasksReducer from './slices/tasksSlice';
 import uiReducer, { setNotification } from './slices/uiSlice';
-import { loadFromStorage, saveToStorage } from '../utils/storage';
+import { loadState, saveState } from '../services/storageService';
 import {
   createInitialTaskListState,
   createInitialUIState,
@@ -35,7 +35,7 @@ const persistenceMiddleware: Middleware<unknown, AppRootState> =
       saveTimeoutId = setTimeout(() => {
         const state = storeAPI.getState();
         if (state.taskList) {
-          const result = saveToStorage(state.taskList);
+          const result = saveState(state.taskList);
           if (!result.ok) {
             // Check for quota error specifically or just generic save error
             if (result.error === 'Storage quota exceeded') {
@@ -68,7 +68,7 @@ const rootReducer = combineReducers({
 });
 
 export const createStore = (preloadedState?: Partial<AppRootState>) => {
-  const initialTaskListState = loadFromStorage();
+  const initialTaskListState = loadState();
 
   const initialState: AppRootState = {
     taskList: initialTaskListState.ok
