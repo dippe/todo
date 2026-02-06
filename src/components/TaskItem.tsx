@@ -15,10 +15,7 @@ interface TaskItemProps {
 export const TaskItem: React.FC<TaskItemProps> = React.memo(
   ({ id, title, completed, onToggle, onDelete, onEdit }) => {
     return (
-      <li
-        className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 border-b border-border last:border-b-0"
-        role="listitem"
-      >
+      <li className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 border-b border-border last:border-b-0">
         <Checkbox
           id={`task-${id}`}
           checked={completed}

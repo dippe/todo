@@ -33,7 +33,6 @@ export const TaskList: React.FC<TaskListProps> = React.memo(
     return (
       <ul
         className="divide-y divide-border rounded-md border border-border overflow-hidden"
-        role="list"
         aria-label="Task list"
       >
         {tasks.map((task) => (
