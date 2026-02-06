@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -54,6 +54,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   submitLabel,
   placeholder = 'What needs to be done?',
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const title = value.trim();
@@ -63,6 +65,11 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     }
 
     onSubmit(title);
+    
+    // Focus input after submit in create mode
+    if (mode === 'create') {
+      inputRef.current?.focus();
+    }
   };
 
   const handleKeyDown = (
@@ -73,13 +80,17 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       const title = value.trim();
       if (title.length > 0) {
         onSubmit(title);
+        // Focus input after submit in create mode
+        if (mode === 'create') {
+            inputRef.current?.focus();
+        }
       }
     }
   };
 
   const formAriaLabel = mode === 'create' ? 'Add new task' : 'Edit task';
   const inputAriaLabel = getAriaLabel(mode);
-  const isDisabled = value.trim().length === 0;
+  const isDisabled = value.trim().length === 0 || value.trim().length > 500;
 
   return (
     <form
@@ -88,6 +99,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       aria-label={formAriaLabel}
     >
       <Input
+        ref={inputRef}
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}

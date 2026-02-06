@@ -106,9 +106,7 @@ function isValidTask(value: unknown): boolean {
  * const result = saveToStorage({ items: [], filter: 'all' });
  * if (!result.ok) console.error(result.error);
  */
-export function saveToStorage(
-  state: TaskListState
-): Result<void, string> {
+export function saveToStorage(state: TaskListState): Result<void, string> {
   try {
     const schema: StorageSchema = {
       version: STORAGE_VERSION,
@@ -137,7 +135,9 @@ function createDefaultState(): TaskListState {
     items: [] as Task[],
     filter: 'all',
     editingId: null as TaskId | null,
-  } as TaskListState;
+    formInput: '',
+    editingValue: '',
+  };
 }
 
 /**

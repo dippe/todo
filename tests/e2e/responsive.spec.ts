@@ -22,8 +22,8 @@ test.describe('Responsive Layout Tests', () => {
     await page.setViewportSize({ width: 320, height: 568 });
 
     // Act - Create a task to interact with the layout
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Mobile test task');
     await submitButton.click();
@@ -53,8 +53,8 @@ test.describe('Responsive Layout Tests', () => {
     await page.setViewportSize({ width: 768, height: 1024 });
 
     // Act - Create a task
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Tablet test task');
     await submitButton.click();
@@ -77,8 +77,8 @@ test.describe('Responsive Layout Tests', () => {
     await page.setViewportSize({ width: 1920, height: 1080 });
 
     // Act - Create a task
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Desktop test task');
     await submitButton.click();
@@ -106,8 +106,8 @@ test.describe('Responsive Layout Tests', () => {
     // Arrange - Start with mobile
     await page.setViewportSize({ width: 375, height: 667 });
 
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Resize test task');
     await submitButton.click();
@@ -130,8 +130,8 @@ test.describe('Responsive Layout Tests', () => {
     await page.setViewportSize({ width: 375, height: 667 });
 
     // Act
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     // Assert - Input and button should stack vertically on mobile
     const inputBox = await taskInput.boundingBox();
@@ -154,8 +154,8 @@ test.describe('Responsive Layout Tests', () => {
     await page.setViewportSize({ width: 1024, height: 768 });
 
     // Act
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     // Assert - Input and button should be on same row on desktop
     const inputBox = await taskInput.boundingBox();
@@ -177,8 +177,8 @@ test.describe('Responsive Layout Tests', () => {
 
     // Act - Create multiple tasks
     const tasks = ['Task 1', 'Task 2', 'Task 3', 'Task 4', 'Task 5'];
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     for (const task of tasks) {
       await taskInput.fill(task);
@@ -227,8 +227,8 @@ test.describe('Touch Target Size Tests', () => {
     page,
   }) => {
     // Arrange - Create a task first
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Test task for checkbox');
     await submitButton.click();
@@ -249,8 +249,8 @@ test.describe('Touch Target Size Tests', () => {
     page,
   }) => {
     // Arrange - Create a task first
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Test task for edit button');
     await submitButton.click();
@@ -271,8 +271,8 @@ test.describe('Touch Target Size Tests', () => {
     page,
   }) => {
     // Arrange - Create a task first
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Test task for delete button');
     await submitButton.click();
@@ -376,8 +376,8 @@ test.describe('Orientation Change Tests', () => {
     await page.evaluate(() => localStorage.clear());
     await page.reload();
 
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Portrait task');
     await submitButton.click();
@@ -403,8 +403,8 @@ test.describe('Orientation Change Tests', () => {
     await page.evaluate(() => localStorage.clear());
     await page.reload();
 
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Landscape first');
     await submitButton.click();
@@ -431,8 +431,8 @@ test.describe('Orientation Change Tests', () => {
     await page.reload();
 
     const tasks = ['Task 1', 'Task 2', 'Task 3'];
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     for (const task of tasks) {
       await taskInput.fill(task);
@@ -459,8 +459,8 @@ test.describe('Orientation Change Tests', () => {
     await page.evaluate(() => localStorage.clear());
     await page.reload();
 
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Touch target test');
     await submitButton.click();
@@ -488,8 +488,8 @@ test.describe('Orientation Change Tests', () => {
     await page.evaluate(() => localStorage.clear());
     await page.reload();
 
-    const taskInput = page.getByRole('textbox', { name: /add task/i });
-    const submitButton = page.getByRole('button', { name: /add task/i });
+    const taskInput = page.getByRole('textbox', { name: 'Add task' });
+    const submitButton = page.getByRole('button', { name: 'Add Task' });
 
     await taskInput.fill('Tablet task');
     await submitButton.click();

@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout } from '@/components/Layout';
 import TaskFormContainer from '@/containers/TaskFormContainer';
 import TaskListContainer from '@/containers/TaskListContainer';
+import EditTaskDialogContainer from '@/containers/EditTaskDialogContainer';
 
 const App: React.FC = () => (
   <Layout>
@@ -13,6 +14,7 @@ const App: React.FC = () => (
         <TaskListContainer />
       </section>
     </div>
+    <EditTaskDialogContainer />
   </Layout>
 );
 

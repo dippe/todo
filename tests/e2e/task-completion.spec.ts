@@ -4,6 +4,7 @@ test.describe('Task Completion Toggle', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
+    await page.waitForTimeout(500); // Wait for persistence debounce
     await page.reload();
     // Mock crypto for the app
     await page.addInitScript(() => {
@@ -102,6 +103,7 @@ test.describe('Task Completion Toggle', () => {
     await expect(checkbox).toBeChecked();
 
     // Act - Reload page
+    await page.waitForTimeout(500); // Wait for persistence debounce
     await page.reload();
 
     // Assert - Task should still be completed
@@ -146,7 +148,7 @@ test.describe('Task Completion Toggle', () => {
     page,
   }) => {
     // Arrange - Create multiple tasks with mixed completion states
-    const tasks = ['Complete me', 'Leave me', 'Complete me too'];
+    const tasks = ['Complete me', 'Leave me', 'Also complete this'];
     const taskInput = page.getByRole('textbox', { name: /add task/i });
     const submitButton = page.getByRole('button', { name: /add task/i });
 
@@ -160,13 +162,14 @@ test.describe('Task Completion Toggle', () => {
       name: /mark.*complete me.*complete/i,
     });
     const checkbox3 = page.getByRole('checkbox', {
-      name: /mark.*complete me too.*complete/i,
+      name: /mark.*also complete this.*complete/i,
     });
 
     await checkbox1.click();
     await checkbox3.click();
 
     // Act - Reload
+    await page.waitForTimeout(500); // Wait for persistence debounce
     await page.reload();
 
     // Assert - Completion states should persist
@@ -177,7 +180,7 @@ test.describe('Task Completion Toggle', () => {
       name: /mark.*leave me.*complete/i,
     });
     const reloadedCheckbox3 = page.getByRole('checkbox', {
-      name: /mark.*complete me too.*complete/i,
+      name: /mark.*also complete this.*complete/i,
     });
 
     await expect(reloadedCheckbox1).toBeChecked();
@@ -190,6 +193,7 @@ test.describe('Completed Task Visual Styling', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
+    await page.waitForTimeout(500); // Wait for persistence debounce
     await page.reload();
   });
 
@@ -272,8 +276,8 @@ test.describe('Completed Task Visual Styling', () => {
     page,
   }) => {
     // Arrange - Create two tasks
-    const completedTask = 'Completed task';
-    const uncompletedTask = 'Uncompleted task';
+    const completedTask = 'Task Alpha';
+    const uncompletedTask = 'Task Beta';
     const taskInput = page.getByRole('textbox', { name: /add task/i });
     const submitButton = page.getByRole('button', { name: /add task/i });
 
@@ -311,6 +315,7 @@ test.describe('Completed Task Visual Styling', () => {
     await checkbox.click();
 
     // Act - Reload page
+    await page.waitForTimeout(500); // Wait for persistence debounce
     await page.reload();
 
     // Assert - Visual styling should persist
@@ -346,6 +351,7 @@ test.describe('Task Deletion', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await page.evaluate(() => localStorage.clear());
+    await page.waitForTimeout(500); // Wait for persistence debounce
     await page.reload();
   });
 
@@ -439,6 +445,7 @@ test.describe('Task Deletion', () => {
     await deleteButton.click();
 
     // Act - Reload page
+    await page.waitForTimeout(500); // Wait for persistence debounce
     await page.reload();
 
     // Assert - Deleted task should stay deleted
