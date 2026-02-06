@@ -32,11 +32,25 @@ export interface TaskListState {
 }
 
 /**
+ * State for the UI slice
+ * All fields are readonly to enforce immutability
+ */
+export interface UIState {
+  readonly notification: {
+    readonly message: string;
+    readonly type: 'success' | 'error' | 'info';
+    readonly id: string;
+  } | null;
+}
+
+/**
  * Root state interface for the entire application store
  */
 export interface RootState {
   /** Task list slice state */
   readonly taskList: TaskListState;
+  /** UI slice state */
+  readonly ui: UIState;
 }
 
 /**
@@ -80,11 +94,22 @@ export function createInitialTaskListState(): TaskListState {
 }
 
 /**
+ * Creates the initial state for the UI slice
+ * @returns Initial UIState with null notification
+ */
+export function createInitialUIState(): UIState {
+  return {
+    notification: null,
+  };
+}
+
+/**
  * Creates the initial root state for the entire application
  * @returns Initial RootState with all slices initialized
  */
 export function createInitialRootState(): RootState {
   return {
     taskList: createInitialTaskListState(),
+    ui: createInitialUIState(),
   };
 }

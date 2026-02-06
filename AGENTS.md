@@ -179,6 +179,10 @@ refactorer agent
 # 8. Review
 code-reviewer agent
 reviewer agent
+
+# 9. task and issue updater
+check the specification checklist and github issue content. validate and update those.
+
 ```
 
 ### For Logic-Only Features (Unit/Integration)
@@ -202,6 +206,10 @@ refactorer agent
 # 6. Review
 code-reviewer agent
 reviewer agent
+
+# 7. task and issue updater
+check the specification checklist and github issue content. validate and update those.
+
 ```
 
 ## Quality Metrics

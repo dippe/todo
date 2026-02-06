@@ -3,13 +3,15 @@ import { createStore } from '../../../src/store/store';
 import { saveToStorage, loadFromStorage } from '../../../src/utils/storage';
 
 jest.mock('../../../src/utils/storage', () => ({
-  saveToStorage: jest.fn(),
+  saveToStorage: jest.fn(() => ({ ok: true })),
   loadFromStorage: jest.fn(() => ({
     ok: true,
     data: {
       items: [],
       filter: 'all',
       editingId: null,
+      formInput: '',
+      editingValue: '',
     },
   })),
 }));

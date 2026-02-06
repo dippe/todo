@@ -5,9 +5,11 @@ import {
   Action,
 } from '@reduxjs/toolkit';
 import tasksReducer from './slices/tasksSlice';
+import uiReducer, { setNotification } from './slices/uiSlice';
 import { loadFromStorage, saveToStorage } from '../utils/storage';
 import {
   createInitialTaskListState,
+  createInitialUIState,
   RootState as AppRootState,
 } from '../types/state';
 
@@ -33,7 +35,26 @@ const persistenceMiddleware: Middleware<unknown, AppRootState> =
       saveTimeoutId = setTimeout(() => {
         const state = storeAPI.getState();
         if (state.taskList) {
-          saveToStorage(state.taskList);
+          const result = saveToStorage(state.taskList);
+          if (!result.ok) {
+            // Check for quota error specifically or just generic save error
+            if (result.error === 'Storage quota exceeded') {
+              storeAPI.dispatch(
+                setNotification({
+                  message:
+                    'Storage quota exceeded. Some changes may not be saved.',
+                  type: 'error',
+                })
+              );
+            } else {
+              storeAPI.dispatch(
+                setNotification({
+                  message: 'Failed to save changes.',
+                  type: 'error',
+                })
+              );
+            }
+          }
         }
       }, 300);
     }
@@ -43,6 +64,7 @@ const persistenceMiddleware: Middleware<unknown, AppRootState> =
 
 const rootReducer = combineReducers({
   taskList: tasksReducer,
+  ui: uiReducer,
 });
 
 export const createStore = (preloadedState?: Partial<AppRootState>) => {
@@ -52,6 +74,7 @@ export const createStore = (preloadedState?: Partial<AppRootState>) => {
     taskList: initialTaskListState.ok
       ? initialTaskListState.data
       : createInitialTaskListState(),
+    ui: createInitialUIState(),
   };
 
   return configureStore({

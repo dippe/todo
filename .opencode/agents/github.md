@@ -36,6 +36,6 @@ Using the github cli (`gh`) to create, update, and close issues.
 - Start implementation (delegate to appropriate agents if necessary).
 
 ### Close Issue
-
+- check the specification tasks, checklist and github issue content. validate and update those.
 - Commit and push everything.
 - Close the ticket using `gh issue close`.
