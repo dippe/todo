@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { createStore } from './store/store';
+import { loadTasks } from './store/slices/tasksSlice';
+import { loadFromStorage, STORAGE_KEY } from './utils/storage';
 import App from './App';
 import './index.css';
 
@@ -53,6 +55,16 @@ const registerServiceWorker = async (): Promise<void> => {
 
 const initializeApp = (): void => {
   const store = createStore();
+
+  // Listen for storage events to sync across tabs
+  window.addEventListener('storage', (event) => {
+    if (event.key === STORAGE_KEY) {
+      const result = loadFromStorage();
+      if (result.ok) {
+        store.dispatch(loadTasks(result.data.items));
+      }
+    }
+  });
 
   const rootElement = document.getElementById('root');
 

@@ -5,9 +5,11 @@ import {
   Action,
 } from '@reduxjs/toolkit';
 import tasksReducer from './slices/tasksSlice';
-import { loadFromStorage, saveToStorage } from '../utils/storage';
+import uiReducer, { setNotification } from './slices/uiSlice';
+import { loadState, saveState } from '../services/storageService';
 import {
   createInitialTaskListState,
+  createInitialUIState,
   RootState as AppRootState,
 } from '../types/state';
 
@@ -15,6 +17,11 @@ let saveTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
 const persistenceMiddleware: Middleware<unknown, AppRootState> =
   (storeAPI) => (next) => (action: unknown) => {
+    // Skip saving if the action is loading from storage to prevent loops
+    if ((action as Action).type === 'taskList/loadTasks') {
+      return next(action as Action);
+    }
+
     const prevState = storeAPI.getState();
     const result = next(action as Action);
     const nextState = storeAPI.getState();
@@ -28,7 +35,26 @@ const persistenceMiddleware: Middleware<unknown, AppRootState> =
       saveTimeoutId = setTimeout(() => {
         const state = storeAPI.getState();
         if (state.taskList) {
-          saveToStorage(state.taskList);
+          const result = saveState(state.taskList);
+          if (!result.ok) {
+            // Check for quota error specifically or just generic save error
+            if (result.error === 'Storage quota exceeded') {
+              storeAPI.dispatch(
+                setNotification({
+                  message:
+                    'Storage quota exceeded. Some changes may not be saved.',
+                  type: 'error',
+                })
+              );
+            } else {
+              storeAPI.dispatch(
+                setNotification({
+                  message: 'Failed to save changes.',
+                  type: 'error',
+                })
+              );
+            }
+          }
         }
       }, 300);
     }
@@ -38,15 +64,17 @@ const persistenceMiddleware: Middleware<unknown, AppRootState> =
 
 const rootReducer = combineReducers({
   taskList: tasksReducer,
+  ui: uiReducer,
 });
 
 export const createStore = (preloadedState?: Partial<AppRootState>) => {
-  const initialTaskListState = loadFromStorage();
+  const initialTaskListState = loadState();
 
   const initialState: AppRootState = {
     taskList: initialTaskListState.ok
       ? initialTaskListState.data
       : createInitialTaskListState(),
+    ui: createInitialUIState(),
   };
 
   return configureStore({

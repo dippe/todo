@@ -5,10 +5,15 @@ import FilterBarContainer from '@/containers/FilterBarContainer';
 import TaskListContainer from '@/containers/TaskListContainer';
 import TaskStatsContainer from '@/containers/TaskStatsContainer';
 import EditTaskDialogContainer from '@/containers/EditTaskDialogContainer';
+import StorageControlsContainer from '@/containers/StorageControlsContainer';
+import NotificationContainer from '@/containers/NotificationContainer';
 
 const App: React.FC = () => (
   <Layout>
     <div className="space-y-6">
+      <section aria-label="Data controls">
+        <StorageControlsContainer />
+      </section>
       <section aria-label="Create new task">
         <TaskFormContainer />
       </section>
@@ -23,6 +28,7 @@ const App: React.FC = () => (
       </section>
     </div>
     <EditTaskDialogContainer />
+    <NotificationContainer />
   </Layout>
 );
 

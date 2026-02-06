@@ -110,6 +110,10 @@ task({
 
 - `documentation-writer` - TSDoc, README, ADRs
 
+**For project management:**
+
+- `github` - Create, update, close issues and manage implementation workflow
+
 ## Complete Subagent List
 
 ### Core Development
@@ -128,10 +132,11 @@ task({
 
 ### Supporting
 
-| Subagent                 | Use When                                                                                 | Input                                                         | Output                            |
-| ------------------------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------- |
-| **refactorer**           | Restructuring existing code without changing behavior (e.g., extraction, simplification) | File path(s) and refactoring goal (e.g. "extract function")   | Refactored code, tests still pass |
-| **documentation-writer** | Generating comments, READMEs, or architectural records (ADRs)                            | Source code file, feature description, or undocumented module | TSDoc, README, ADRs               |
+| Subagent                 | Use When                                                                                     | Input                                                         | Output                            |
+| ------------------------ | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------- |
+| **refactorer**           | Restructuring existing code without changing behavior (e.g., extraction, simplification)     | File path(s) and refactoring goal (e.g. "extract function")   | Refactored code, tests still pass |
+| **documentation-writer** | Generating comments, READMEs, or architectural records (ADRs)                                | Source code file, feature description, or undocumented module | TSDoc, README, ADRs               |
+| **github**               | Managing GitHub issues: create (with spec), implement (read issue+spec), close (commit+push) | Action (create/implement/close) + Issue ID/Details            | GitHub issue updates, commits     |
 
 ## Important Rules for LLMs
 
@@ -174,6 +179,10 @@ refactorer agent
 # 8. Review
 code-reviewer agent
 reviewer agent
+
+# 9. task and issue updater
+check the specification checklist and github issue content. validate and update those.
+
 ```
 
 ### For Logic-Only Features (Unit/Integration)
@@ -197,6 +206,10 @@ refactorer agent
 # 6. Review
 code-reviewer agent
 reviewer agent
+
+# 7. task and issue updater
+check the specification checklist and github issue content. validate and update those.
+
 ```
 
 ## Quality Metrics
