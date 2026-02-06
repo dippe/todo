@@ -3,7 +3,7 @@
  * Implements cache-first strategy for offline functionality
  */
 
-const CACHE_NAME = 'todo-pwa-v1';
+const CACHE_NAME = 'todo-pwa-v2';
 const RUNTIME_CACHE = 'todo-pwa-runtime';
 
 // Assets to cache on install
@@ -76,7 +76,7 @@ self.addEventListener('activate', (event) => {
 });
 
 /**
- * Fetch event - cache-first strategy with network fallback
+ * Fetch event - Network-first for HTML, Cache-first for others
  */
 self.addEventListener('fetch', (event) => {
   const { request } = event;
@@ -92,14 +92,40 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Network-first strategy for HTML documents
+  if (
+    request.mode === 'navigate' ||
+    request.headers.get('accept').includes('text/html')
+  ) {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          // Cache the new response
+          const responseToCache = networkResponse.clone();
+          caches.open(RUNTIME_CACHE).then((cache) => {
+            cache.put(request, responseToCache);
+          });
+          return networkResponse;
+        })
+        .catch(() => {
+          console.log('[Service Worker] Network failed, serving from cache');
+          return caches.match(request).then((cachedResponse) => {
+            return cachedResponse || caches.match('/index.html');
+          });
+        })
+    );
+    return;
+  }
+
+  // Cache-first strategy for static assets
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       if (cachedResponse) {
-        console.log('[Service Worker] Serving from cache:', request.url);
+        // console.log('[Service Worker] Serving from cache:', request.url);
         return cachedResponse;
       }
 
-      console.log('[Service Worker] Fetching from network:', request.url);
+      // console.log('[Service Worker] Fetching from network:', request.url);
 
       return fetch(request)
         .then((networkResponse) => {

@@ -10,33 +10,43 @@ import './index.css';
  * Only registers in production builds
  */
 const registerServiceWorker = async (): Promise<void> => {
-  if ('serviceWorker' in navigator && import.meta.env?.MODE === 'production') {
-    try {
-      const registration = await navigator.serviceWorker.register(
-        '/service-worker.js',
-        { scope: '/' }
-      );
-      console.log(
-        'Service Worker registered successfully:',
-        registration.scope
-      );
+  if ('serviceWorker' in navigator) {
+    if (import.meta.env?.MODE === 'production') {
+      try {
+        const registration = await navigator.serviceWorker.register(
+          '/service-worker.js',
+          { scope: '/' }
+        );
+        console.log(
+          'Service Worker registered successfully:',
+          registration.scope
+        );
 
-      // Check for updates periodically
-      registration.addEventListener('updatefound', () => {
-        const newWorker = registration.installing;
-        if (newWorker) {
-          newWorker.addEventListener('statechange', () => {
-            if (
-              newWorker.state === 'installed' &&
-              navigator.serviceWorker.controller
-            ) {
-              console.log('New service worker available. Reload to update.');
-            }
-          });
+        // Check for updates periodically
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              if (
+                newWorker.state === 'installed' &&
+                navigator.serviceWorker.controller
+              ) {
+                console.log('New service worker available. Reload to update.');
+              }
+            });
+          }
+        });
+      } catch (error) {
+        console.error('Service Worker registration failed:', error);
+      }
+    } else {
+      // Unregister service worker in development to avoid caching issues
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const registration of registrations) {
+          registration.unregister();
+          console.log('Service Worker unregistered in development mode');
         }
       });
-    } catch (error) {
-      console.error('Service Worker registration failed:', error);
     }
   }
 };
