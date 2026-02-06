@@ -36,6 +36,7 @@ module.exports = {
     // React (NO HOOKS - except in containers)
     'react-hooks/rules-of-hooks': 'off', // We don't use hooks
     'react/react-in-jsx-scope': 'off', // JSX transform handles this
+    'react/prop-types': 'off', // TypeScript handles this
 
     // Code Quality
     'max-lines-per-function': ['error', 20],
@@ -56,6 +57,7 @@ module.exports = {
         'src/store/**/*.ts',
         'src/lib/**/*.ts',
         'src/main.tsx',
+        'src/App.tsx',
       ],
       rules: {
         'max-lines-per-function': 'off', // Allow longer functions

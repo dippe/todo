@@ -110,7 +110,7 @@ test.describe('Empty Task Validation', () => {
 
     // Act
     await taskInput.fill('   ');
-    
+
     // Assert
     // Button should be disabled for whitespace-only input
     await expect(submitButton).toBeDisabled();

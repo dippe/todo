@@ -120,17 +120,74 @@ const tasksSlice = createSlice({
 });
 
 export const {
+  /**
+   * Action to add a new task.
+   * Payload: Task title string.
+   */
   addTask,
+
+  /**
+   * Action to toggle task completion status.
+   * Payload: Task ID.
+   */
   toggleTask,
+
+  /**
+   * Action to update a task's title.
+   * Payload: { id: TaskId, title: string }.
+   */
   updateTask,
+
+  /**
+   * Action to delete a task.
+   * Payload: Task ID.
+   */
   deleteTask,
+
+  /**
+   * Action to set the current task filter.
+   * Payload: 'all' | 'active' | 'completed'.
+   */
   setFilter,
+
+  /**
+   * Action to set the task currently being edited.
+   * Payload: Task ID or null (to stop editing).
+   */
   setEditingId,
+
+  /**
+   * Action to load tasks (e.g. from storage or sync).
+   * Payload: Array of tasks.
+   */
   loadTasks,
+
+  /**
+   * Action to clear all completed tasks.
+   * No payload.
+   */
   clearCompleted,
+
+  /**
+   * Action to set the form input value.
+   * Payload: Input string.
+   */
   setFormInput,
+
+  /**
+   * Action to clear the form input value.
+   * No payload.
+   */
   clearFormInput,
+
+  /**
+   * Action to set the value of the task being edited.
+   * Payload: New title string.
+   */
   setEditingValue,
 } = tasksSlice.actions;
 
+/**
+ * The Redux reducer for the task list state.
+ */
 export default tasksSlice.reducer;

@@ -344,12 +344,12 @@ test.describe('Task Editing Flow', () => {
     // We should test that the input value is truncated.
     const longText = 'a'.repeat(501);
     await dialogInput.fill(longText);
-    
+
     // Verify truncation
     const value = await dialogInput.inputValue();
     expect(value.length).toBe(500);
     expect(value).toBe('a'.repeat(500));
-    
+
     // Verify button is enabled (since 500 is valid)
     await expect(saveButton).toBeEnabled();
   });

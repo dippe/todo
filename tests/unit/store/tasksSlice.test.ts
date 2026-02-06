@@ -12,7 +12,11 @@ import tasksReducer, {
 } from '../../../src/store/slices/tasksSlice';
 
 describe('tasksSlice', () => {
-  const createMockTask = (id: string, title: string, completed: boolean): Task => ({
+  const createMockTask = (
+    id: string,
+    title: string,
+    completed: boolean
+  ): Task => ({
     id: id as TaskId,
     title,
     completed,
@@ -20,7 +24,9 @@ describe('tasksSlice', () => {
     updatedAt: 1000 as Timestamp,
   });
 
-  const createMockState = (overrides: Partial<TaskListState> = {}): TaskListState => ({
+  const createMockState = (
+    overrides: Partial<TaskListState> = {}
+  ): TaskListState => ({
     items: [],
     filter: 'all',
     editingId: null,
@@ -162,7 +168,10 @@ describe('tasksSlice', () => {
     it('should not modify state for non-existent task', () => {
       const task = createMockTask('task-1', 'Title', false);
       const initialState = createMockState({ items: [task] });
-      const action = updateTask({ id: 'non-existent' as TaskId, title: 'New title' });
+      const action = updateTask({
+        id: 'non-existent' as TaskId,
+        title: 'New title',
+      });
       const state = tasksReducer(initialState, action);
 
       expect(state.items[0]?.title).toBe('Title');

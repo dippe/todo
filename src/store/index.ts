@@ -6,7 +6,12 @@
  * Follows the barrel pattern for clean imports.
  */
 
-export { createStore, type AppStore, type AppDispatch, type RootState } from './store';
+export {
+  createStore,
+  type AppStore,
+  type AppDispatch,
+  type RootState,
+} from './store';
 export {
   selectAllTasks,
   selectFilter,

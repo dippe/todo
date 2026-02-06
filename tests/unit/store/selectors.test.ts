@@ -1,4 +1,8 @@
-import { TaskListState, TaskListMetrics, RootState } from '../../../src/types/state';
+import {
+  TaskListState,
+  TaskListMetrics,
+  RootState,
+} from '../../../src/types/state';
 import { Task, TaskList, TaskId, Timestamp } from '../../../src/types/task';
 import {
   selectAllTasks,
@@ -10,7 +14,11 @@ import {
 } from '../../../src/store/selectors';
 
 describe('selectors', () => {
-  const createMockTask = (id: string, title: string, completed: boolean): Task => ({
+  const createMockTask = (
+    id: string,
+    title: string,
+    completed: boolean
+  ): Task => ({
     id: id as TaskId,
     title,
     completed,
@@ -18,7 +26,9 @@ describe('selectors', () => {
     updatedAt: 1000 as Timestamp,
   });
 
-  const createMockState = (overrides: Partial<TaskListState> = {}): RootState => ({
+  const createMockState = (
+    overrides: Partial<TaskListState> = {}
+  ): RootState => ({
     taskList: {
       items: [],
       filter: 'all',
@@ -123,9 +133,7 @@ describe('selectors', () => {
     });
 
     it('should return empty array when no matching tasks', () => {
-      const tasks: TaskList = [
-        createMockTask('1', 'Task', false),
-      ];
+      const tasks: TaskList = [createMockTask('1', 'Task', false)];
       const state = createMockState({ items: tasks, filter: 'completed' });
 
       expect(selectFilteredTasks(state)).toEqual([]);
@@ -305,7 +313,10 @@ describe('selectors', () => {
 
     it('should return undefined for non-existent editing ID', () => {
       const tasks: TaskList = [createMockTask('1', 'Task 1', false)];
-      const state = createMockState({ items: tasks, editingId: 'non-existent' as TaskId });
+      const state = createMockState({
+        items: tasks,
+        editingId: 'non-existent' as TaskId,
+      });
 
       expect(selectEditingTask(state)).toBeUndefined();
     });
@@ -325,8 +336,14 @@ describe('selectors', () => {
         createMockTask('1', 'Task 1', false),
         createMockTask('2', 'Task 2', false),
       ];
-      const state1 = createMockState({ items: tasks, editingId: '1' as TaskId });
-      const state2 = createMockState({ items: tasks, editingId: '2' as TaskId });
+      const state1 = createMockState({
+        items: tasks,
+        editingId: '1' as TaskId,
+      });
+      const state2 = createMockState({
+        items: tasks,
+        editingId: '2' as TaskId,
+      });
 
       const result1 = selectEditingTask(state1);
       const result2 = selectEditingTask(state2);
@@ -339,8 +356,14 @@ describe('selectors', () => {
     it('should recalculate when tasks change', () => {
       const tasks1: TaskList = [createMockTask('1', 'Old Title', false)];
       const tasks2: TaskList = [createMockTask('1', 'New Title', false)];
-      const state1 = createMockState({ items: tasks1, editingId: '1' as TaskId });
-      const state2 = createMockState({ items: tasks2, editingId: '1' as TaskId });
+      const state1 = createMockState({
+        items: tasks1,
+        editingId: '1' as TaskId,
+      });
+      const state2 = createMockState({
+        items: tasks2,
+        editingId: '1' as TaskId,
+      });
 
       const result1 = selectEditingTask(state1);
       const result2 = selectEditingTask(state2);

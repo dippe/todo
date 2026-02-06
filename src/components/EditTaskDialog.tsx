@@ -47,10 +47,8 @@ export const EditTaskDialog: React.FC<EditTaskDialogProps> = ({
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onCancel()}>
       <DialogContent className="sm:max-w-[425px]" aria-modal="true">
         <DialogHeader>
-          <DialogTitle id="edit-task-title">Edit Task</DialogTitle>
-          <DialogDescription id="edit-task-description">
-            Edit the title of your task
-          </DialogDescription>
+          <DialogTitle>Edit Task</DialogTitle>
+          <DialogDescription>Edit the title of your task</DialogDescription>
         </DialogHeader>
         <TaskForm
           mode="edit"

@@ -4,21 +4,34 @@ import type { TaskList, Task } from '../types/task';
 
 const selectTaskListState = (state: RootState) => state.taskList;
 
+/**
+ * Selects all tasks from the state.
+ */
 export const selectAllTasks = createSelector(
   [selectTaskListState],
   (taskList) => taskList.items
 );
 
+/**
+ * Selects the current task filter.
+ */
 export const selectFilter = createSelector(
   [selectTaskListState],
   (taskList) => taskList.filter
 );
 
+/**
+ * Selects the ID of the task currently being edited.
+ */
 export const selectEditingId = createSelector(
   [selectTaskListState],
   (taskList) => taskList.editingId
 );
 
+/**
+ * Selects tasks filtered by the current filter state.
+ * Memoized to avoid recalculation if tasks and filter remain unchanged.
+ */
 export const selectFilteredTasks = createSelector(
   [selectAllTasks, selectFilter],
   (tasks, filter): TaskList => {
@@ -34,6 +47,10 @@ export const selectFilteredTasks = createSelector(
   }
 );
 
+/**
+ * Selects task metrics (total, active, completed, filtered counts).
+ * Memoized to avoid recalculation.
+ */
 export const selectMetrics = createSelector(
   [selectAllTasks, selectFilter, selectFilteredTasks],
   (allTasks, _filter, filteredTasks) => {
@@ -51,6 +68,10 @@ export const selectMetrics = createSelector(
   }
 );
 
+/**
+ * Selects the full Task object for the task currently being edited.
+ * Returns undefined if no task is being edited or if the ID is invalid.
+ */
 export const selectEditingTask = createSelector(
   [selectAllTasks, selectEditingId],
   (tasks, editingId): Task | undefined => {

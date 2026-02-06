@@ -190,10 +190,7 @@ describe('storage utilities', () => {
 
     it('should handle security error', () => {
       // Arrange - Mock security error
-      const securityError = new DOMException(
-        'SecurityError',
-        'SecurityError'
-      );
+      const securityError = new DOMException('SecurityError', 'SecurityError');
       mockStorage.set = (_key: string, _value: string): Map<string, string> => {
         throw securityError;
       };

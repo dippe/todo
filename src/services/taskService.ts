@@ -9,17 +9,20 @@ import { now } from '../utils/date';
  * @param title - Task title
  * @returns Result with new task list or error
  */
-export const addTask = (tasks: TaskList, title: string): Result<TaskList, string> => {
+export const addTask = (
+  tasks: TaskList,
+  title: string
+): Result<TaskList, string> => {
   const trimmed = title.trim();
-  
+
   if (trimmed.length === 0) {
     return { ok: false, error: 'Title cannot be empty' };
   }
-  
+
   if (trimmed.length > 500) {
     return { ok: false, error: 'Title cannot exceed 500 characters' };
   }
-  
+
   const newTask: Task = {
     id: generateId(),
     title: trimmed,
@@ -27,7 +30,7 @@ export const addTask = (tasks: TaskList, title: string): Result<TaskList, string
     createdAt: now(),
     updatedAt: now(),
   };
-  
+
   return { ok: true, data: [...tasks, newTask] };
 };
 
@@ -37,19 +40,20 @@ export const addTask = (tasks: TaskList, title: string): Result<TaskList, string
  * @param id - Task ID to toggle
  * @returns Result with updated task list or error
  */
-export const toggleTask = (tasks: TaskList, id: TaskId): Result<TaskList, string> => {
+export const toggleTask = (
+  tasks: TaskList,
+  id: TaskId
+): Result<TaskList, string> => {
   const taskIndex = tasks.findIndex((t) => t.id === id);
-  
+
   if (taskIndex === -1) {
     return { ok: false, error: 'Task not found' };
   }
-  
+
   const updated = tasks.map((t) =>
-    t.id === id
-      ? { ...t, completed: !t.completed, updatedAt: now() }
-      : t
+    t.id === id ? { ...t, completed: !t.completed, updatedAt: now() } : t
   );
-  
+
   return { ok: true, data: updated };
 };
 
@@ -66,27 +70,25 @@ export const updateTask = (
   title: string
 ): Result<TaskList, string> => {
   const trimmed = title.trim();
-  
+
   if (trimmed.length === 0) {
     return { ok: false, error: 'Title cannot be empty' };
   }
-  
+
   if (trimmed.length > 500) {
     return { ok: false, error: 'Title cannot exceed 500 characters' };
   }
-  
+
   const taskIndex = tasks.findIndex((t) => t.id === id);
-  
+
   if (taskIndex === -1) {
     return { ok: false, error: 'Task not found' };
   }
-  
+
   const updated = tasks.map((t) =>
-    t.id === id
-      ? { ...t, title: trimmed, updatedAt: now() }
-      : t
+    t.id === id ? { ...t, title: trimmed, updatedAt: now() } : t
   );
-  
+
   return { ok: true, data: updated };
 };
 
@@ -96,12 +98,15 @@ export const updateTask = (
  * @param id - Task ID to delete
  * @returns Result with updated task list or error
  */
-export const deleteTask = (tasks: TaskList, id: TaskId): Result<TaskList, string> => {
+export const deleteTask = (
+  tasks: TaskList,
+  id: TaskId
+): Result<TaskList, string> => {
   const filtered = tasks.filter((t) => t.id !== id);
-  
+
   if (filtered.length === tasks.length) {
     return { ok: false, error: 'Task not found' };
   }
-  
+
   return { ok: true, data: filtered };
 };

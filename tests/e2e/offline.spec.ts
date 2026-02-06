@@ -461,7 +461,7 @@ test.describe('User Story 5: Offline PWA Functionality', () => {
     await expect(task1Item).toBeVisible(); // Ensure it is found
     await task1Item.getByRole('checkbox').click();
     await page.waitForTimeout(300);
-    
+
     // Verify Task 1 is STILL visible (completed)
     await expect(task1Item).toBeVisible();
 
