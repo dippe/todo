@@ -76,6 +76,42 @@ describe('taskService', () => {
         expect(result.data[1]?.title).toBe('New task');
       }
     });
+
+    it('should reject when task limit is reached', () => {
+      const limit = 10000;
+      const tasks = Array.from({ length: limit }, (_, i) => ({
+        id: `task-${i}` as TaskId,
+        title: `Task ${i}`,
+        completed: false,
+        createdAt: 1000 as Timestamp,
+        updatedAt: 1000 as Timestamp,
+      }));
+
+      const result = addTask(tasks, 'New task');
+
+      expect(result.ok).toBe(false);
+      if (!result.ok) {
+        expect(result.error).toContain('limit');
+      }
+    });
+
+    it('should allow adding task when below limit', () => {
+      const limit = 10000;
+      const tasks = Array.from({ length: limit - 1 }, (_, i) => ({
+        id: `task-${i}` as TaskId,
+        title: `Task ${i}`,
+        completed: false,
+        createdAt: 1000 as Timestamp,
+        updatedAt: 1000 as Timestamp,
+      }));
+
+      const result = addTask(tasks, 'New task');
+
+      expect(result.ok).toBe(true);
+      if (result.ok) {
+        expect(result.data).toHaveLength(limit);
+      }
+    });
   });
 
   describe('toggleTask', () => {

@@ -23,6 +23,10 @@ export const addTask = (
     return { ok: false, error: 'Title cannot exceed 500 characters' };
   }
 
+  if (tasks.length >= 10000) {
+    return { ok: false, error: 'Task limit reached (10,000 tasks max)' };
+  }
+
   const newTask: Task = {
     id: generateId(),
     title: trimmed,

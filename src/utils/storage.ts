@@ -167,7 +167,15 @@ export function loadFromStorage(): Result<TaskListState, string> {
 
     const schema = parsed as StorageSchema;
 
-    // Return the stored data (with migration if needed in future)
+    // Migration logic
+    if (schema.version < STORAGE_VERSION) {
+      console.info(
+        `Migrating storage from version ${schema.version} to ${STORAGE_VERSION}`
+      );
+      // Implement specific version migrations here when STORAGE_VERSION increases
+      // For now, we just return the data as is since there are no breaking changes yet
+    }
+
     return { ok: true, data: schema.data };
   } catch (error) {
     console.error('Failed to load storage:', error);
