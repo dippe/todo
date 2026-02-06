@@ -1,7 +1,9 @@
 import React from 'react';
 import { Layout } from '@/components/Layout';
 import TaskFormContainer from '@/containers/TaskFormContainer';
+import FilterBarContainer from '@/containers/FilterBarContainer';
 import TaskListContainer from '@/containers/TaskListContainer';
+import TaskStatsContainer from '@/containers/TaskStatsContainer';
 import EditTaskDialogContainer from '@/containers/EditTaskDialogContainer';
 
 const App: React.FC = () => (
@@ -10,8 +12,14 @@ const App: React.FC = () => (
       <section aria-label="Create new task">
         <TaskFormContainer />
       </section>
+      <section aria-label="Filter tasks">
+        <FilterBarContainer />
+      </section>
       <section aria-label="Task list">
         <TaskListContainer />
+      </section>
+      <section aria-label="Task statistics">
+        <TaskStatsContainer />
       </section>
     </div>
     <EditTaskDialogContainer />

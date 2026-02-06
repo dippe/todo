@@ -276,14 +276,14 @@
 
 ### Filtering & Metrics
 
-- [ ] T136 [P] Create FilterBar pure component in src/components/FilterBar.tsx (props: currentFilter, onFilterChange, counts)
-- [ ] T137 [P] Create FilterBarContainer with connect() HOC in src/containers/FilterBarContainer.tsx
-- [ ] T138 [P] Create TaskStats pure component in src/components/TaskStats.tsx (props: totalCount, completedCount, activeCount, onClearCompleted)
-- [ ] T139 [P] Create TaskStatsContainer with connect() HOC in src/containers/TaskStatsContainer.tsx
-- [ ] T140 Integrate FilterBarContainer into App.tsx
-- [ ] T141 Integrate TaskStatsContainer into App.tsx
-- [ ] T142 Implement clearCompleted reducer in tasksSlice.ts
-- [ ] T143 Wire up onClearCompleted handler in TaskStatsContainer
+- [x] T136 [P] Create FilterBar pure component in src/components/FilterBar.tsx (props: currentFilter, onFilterChange, counts)
+- [x] T137 [P] Create FilterBarContainer with connect() HOC in src/containers/FilterBarContainer.tsx
+- [x] T138 [P] Create TaskStats pure component in src/components/TaskStats.tsx (props: totalCount, completedCount, activeCount, onClearCompleted)
+- [x] T139 [P] Create TaskStatsContainer with connect() HOC in src/containers/TaskStatsContainer.tsx
+- [x] T140 Integrate FilterBarContainer into App.tsx
+- [x] T141 Integrate TaskStatsContainer into App.tsx
+- [x] T142 Implement clearCompleted reducer in tasksSlice.ts
+- [x] T143 Wire up onClearCompleted handler in TaskStatsContainer
 
 ### Multi-Tab Sync
 
