@@ -16,3 +16,4 @@ test-results/
 .sass-cache/
 playwright-report/
 test-results.json
+.opencode/opencode.json

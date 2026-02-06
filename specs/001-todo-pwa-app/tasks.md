@@ -39,12 +39,12 @@
 - [x] T012 [P] Initialize Playwright for E2E tests with npm init playwright@latest
 - [x] T013 Configure Jest in jest.config.js with 90% coverage threshold
 - [x] T014 Create test setup file in src/setupTests.ts
-- [ ] T015 [P] Initialize shadcn/ui with npx shadcn-ui@latest init
-- [ ] T016 [P] Add shadcn Button component with npx shadcn-ui@latest add button
-- [ ] T017 [P] Add shadcn Input component with npx shadcn-ui@latest add input
-- [ ] T018 [P] Add shadcn Checkbox component with npx shadcn-ui@latest add checkbox
-- [ ] T019 [P] Add shadcn Card component with npx shadcn-ui@latest add card
-- [ ] T020 [P] Add shadcn Dialog component with npx shadcn-ui@latest add dialog
+- [x] T015 [P] Initialize shadcn/ui with npx shadcn-ui@latest init
+- [x] T016 [P] Add shadcn Button component with npx shadcn-ui@latest add button
+- [x] T017 [P] Add shadcn Input component with npx shadcn-ui@latest add input
+- [x] T018 [P] Add shadcn Checkbox component with npx shadcn-ui@latest add checkbox
+- [x] T019 [P] Add shadcn Card component with npx shadcn-ui@latest add card
+- [x] T020 [P] Add shadcn Dialog component with npx shadcn-ui@latest add dialog
 - [x] T021 Create project directory structure: src/{components,containers,store/slices,services,utils,types}
 - [x] T022 Create test directory structure: tests/{unit,integration,e2e}
 - [x] T023 Create public directory structure: public/{icons} for PWA assets
@@ -117,26 +117,26 @@
 
 ### Tests for User Story 1 (TDD - Write First, Ensure Fail)
 
-- [ ] T055 [P] [US1] Write E2E test for task creation flow in tests/e2e/task-creation.spec.ts
-- [ ] T056 [P] [US1] Write E2E test for empty task validation in tests/e2e/task-creation.spec.ts
-- [ ] T057 [P] [US1] Write E2E test for task persistence in tests/e2e/task-creation.spec.ts
-- [ ] T058 [P] [US1] Write integration test for TaskForm component in tests/integration/TaskFormContainer.test.tsx
-- [ ] T059 [P] [US1] Write integration test for TaskList component in tests/integration/TaskListContainer.test.tsx
+- [x] T055 [P] [US1] Write E2E test for task creation flow in tests/e2e/task-creation.spec.ts
+- [x] T056 [P] [US1] Write E2E test for empty task validation in tests/e2e/task-creation.spec.ts
+- [x] T057 [P] [US1] Write E2E test for task persistence in tests/e2e/task-creation.spec.ts
+- [x] T058 [P] [US1] Write integration test for TaskForm component in tests/integration/TaskFormContainer.test.tsx
+- [x] T059 [P] [US1] Write integration test for TaskList component in tests/integration/TaskListContainer.test.tsx
 
 ### Implementation for User Story 1
 
-- [ ] T060 [P] [US1] Create TaskForm pure component in src/components/TaskForm.tsx (props: mode, initialValue, onSubmit, onCancel, submitLabel, placeholder)
-- [ ] T061 [P] [US1] Create TaskItem pure component in src/components/TaskItem.tsx (props: id, title, completed, onToggle, onDelete, onEdit)
-- [ ] T062 [P] [US1] Create TaskList pure component in src/components/TaskList.tsx (props: tasks, onToggle, onDelete, onEdit, emptyMessage)
-- [ ] T063 [US1] Create TaskFormContainer with connect() HOC in src/containers/TaskFormContainer.tsx (maps dispatch to addTask)
-- [ ] T064 [US1] Create TaskListContainer with connect() HOC in src/containers/TaskListContainer.tsx (maps state to tasks, dispatch to handlers)
-- [ ] T065 [US1] Create App root component in src/App.tsx integrating Layout + TaskFormContainer + TaskListContainer
-- [ ] T066 [US1] Create main entry point in src/main.tsx with Redux Provider and store initialization
-- [ ] T067 [US1] Load tasks from LocalStorage on app init in src/main.tsx
-- [ ] T068 [US1] Add form validation for empty task in TaskFormContainer (FR-011)
-- [ ] T069 [US1] Add form validation for max 500 char title in TaskFormContainer
-- [ ] T070 [US1] Implement accessibility: aria-labels for TaskForm input and submit button
-- [ ] T071 [US1] Implement accessibility: aria-labels for TaskItem checkbox and actions
+- [x] T060 [P] [US1] Create TaskForm pure component in src/components/TaskForm.tsx (props: mode, initialValue, onSubmit, onCancel, submitLabel, placeholder)
+- [x] T061 [P] [US1] Create TaskItem pure component in src/components/TaskItem.tsx (props: id, title, completed, onToggle, onDelete, onEdit)
+- [x] T062 [P] [US1] Create TaskList pure component in src/components/TaskList.tsx (props: tasks, onToggle, onDelete, onEdit, emptyMessage)
+- [x] T063 [US1] Create TaskFormContainer with connect() HOC in src/containers/TaskFormContainer.tsx (maps dispatch to addTask)
+- [x] T064 [US1] Create TaskListContainer with connect() HOC in src/containers/TaskListContainer.tsx (maps state to tasks, dispatch to handlers)
+- [x] T065 [US1] Create App root component in src/App.tsx integrating Layout + TaskFormContainer + TaskListContainer
+- [x] T066 [US1] Create main entry point in src/main.tsx with Redux Provider and store initialization
+- [x] T067 [US1] Load tasks from LocalStorage on app init in src/main.tsx
+- [x] T068 [US1] Add form validation for empty task in TaskFormContainer (FR-011)
+- [x] T069 [US1] Add form validation for max 500 char title in TaskFormContainer
+- [x] T070 [US1] Implement accessibility: aria-labels for TaskForm input and submit button
+- [x] T071 [US1] Implement accessibility: aria-labels for TaskItem checkbox and actions
 
 **Checkpoint**: User Story 1 complete - Users can create, view, and persist tasks. This is a functional MVP!
 
@@ -187,15 +187,15 @@
 
 ### Implementation for User Story 2
 
-- [ ] T090 [US2] Add onToggle handler to TaskListContainer connect() mapDispatchToProps (dispatch toggleTask)
-- [ ] T091 [US2] Add onDelete handler to TaskListContainer connect() mapDispatchToProps (dispatch deleteTask)
-- [ ] T092 [US2] Update TaskItem component to handle toggle action on checkbox click
-- [ ] T093 [US2] Update TaskItem component to handle delete action on delete button click
-- [ ] T094 [US2] Add visual styling for completed tasks in TaskItem.tsx (line-through, gray color - FR-010)
-- [ ] T095 [US2] Add confirmation dialog for delete action using shadcn Dialog
-- [ ] T096 [US2] Implement accessibility: aria-label for delete button with task title
-- [ ] T097 [US2] Implement accessibility: aria-checked state for checkbox
-- [ ] T098 [US2] Test multi-tab sync when task deleted in another tab (storage event listener)
+- [x] T090 [US2] Add onToggle handler to TaskListContainer connect() mapDispatchToProps (dispatch toggleTask)
+- [x] T091 [US2] Add onDelete handler to TaskListContainer connect() mapDispatchToProps (dispatch deleteTask)
+- [x] T092 [US2] Update TaskItem component to handle toggle action on checkbox click
+- [x] T093 [US2] Update TaskItem component to handle delete action on delete button click
+- [x] T094 [US2] Add visual styling for completed tasks in TaskItem.tsx (line-through, gray color - FR-010)
+- [x] T095 [US2] Add confirmation dialog for delete action using shadcn Dialog
+- [x] T096 [US2] Implement accessibility: aria-label for delete button with task title
+- [x] T097 [US2] Implement accessibility: aria-checked state for checkbox
+- [x] T098 [US2] Test multi-tab sync when task deleted in another tab (storage event listener)
 
 **Checkpoint**: Users can manage task lifecycle (create, complete, delete). Core functionality complete!
 
@@ -252,19 +252,19 @@
 
 ### Implementation for User Story 3
 
-- [ ] T123 [P] [US3] Create EditTaskDialog pure component in src/components/EditTaskDialog.tsx (props: open, task, onSave, onClose)
-- [ ] T124 [US3] Create EditTaskDialogContainer with connect() HOC in src/containers/EditTaskDialogContainer.tsx
-- [ ] T125 [US3] Add onEdit handler to TaskListContainer to dispatch setEditingId(id)
-- [ ] T126 [US3] Map editingId and editingTask from state in EditTaskDialogContainer (using selectEditingTask selector)
-- [ ] T127 [US3] Implement onSave handler in EditTaskDialogContainer to dispatch updateTask({ id, title })
-- [ ] T128 [US3] Implement onClose handler in EditTaskDialogContainer to dispatch setEditingId(null)
-- [ ] T129 [US3] Integrate EditTaskDialogContainer into App.tsx
-- [ ] T130 [US3] Add edit button to TaskItem component that calls onEdit(id)
-- [ ] T131 [US3] Reuse TaskForm component inside EditTaskDialog (mode: 'edit', initialValue: task.title)
-- [ ] T132 [US3] Add validation for empty text during edit (same as create)
-- [ ] T133 [US3] Implement accessibility: Dialog role, aria-modal, focus trap
-- [ ] T134 [US3] Implement accessibility: Escape key to close dialog
-- [ ] T135 [US3] Implement accessibility: Focus returns to edit button on close
+- [x] T123 [P] [US3] Create EditTaskDialog pure component in src/components/EditTaskDialog.tsx (props: open, task, onSave, onClose)
+- [x] T124 [US3] Create EditTaskDialogContainer with connect() HOC in src/containers/EditTaskDialogContainer.tsx
+- [x] T125 [US3] Add onEdit handler to TaskListContainer to dispatch setEditingId(id)
+- [x] T126 [US3] Map editingId and editingTask from state in EditTaskDialogContainer (using selectEditingTask selector)
+- [x] T127 [US3] Implement onSave handler in EditTaskDialogContainer to dispatch updateTask({ id, title })
+- [x] T128 [US3] Implement onClose handler in EditTaskDialogContainer to dispatch setEditingId(null)
+- [x] T129 [US3] Integrate EditTaskDialogContainer into App.tsx
+- [x] T130 [US3] Add edit button to TaskItem component that calls onEdit(id)
+- [x] T131 [US3] Reuse TaskForm component inside EditTaskDialog (mode: 'edit', initialValue: task.title)
+- [x] T132 [US3] Add validation for empty text during edit (same as create)
+- [x] T133 [US3] Implement accessibility: Dialog role, aria-modal, focus trap
+- [x] T134 [US3] Implement accessibility: Escape key to close dialog
+- [x] T135 [US3] Implement accessibility: Focus returns to edit button on close
 
 **Checkpoint**: Users can edit tasks in-place. All P1-P3 user stories complete!
 
