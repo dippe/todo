@@ -15,6 +15,11 @@ let saveTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
 const persistenceMiddleware: Middleware<unknown, AppRootState> =
   (storeAPI) => (next) => (action: unknown) => {
+    // Skip saving if the action is loading from storage to prevent loops
+    if ((action as Action).type === 'taskList/loadTasks') {
+      return next(action as Action);
+    }
+
     const prevState = storeAPI.getState();
     const result = next(action as Action);
     const nextState = storeAPI.getState();

@@ -287,11 +287,11 @@
 
 ### Multi-Tab Sync
 
-- [ ] T144 Implement storage event listener for multi-tab sync in src/main.tsx
-- [ ] T145 Dispatch loadTasks action when storage event detected from other tab
-- [ ] T146 Test multi-tab create task sync
-- [ ] T147 Test multi-tab toggle task sync
-- [ ] T148 Test multi-tab delete task sync
+- [x] T144 Implement storage event listener for multi-tab sync in src/main.tsx
+- [x] T145 Dispatch loadTasks action when storage event detected from other tab
+- [x] T146 Test multi-tab create task sync
+- [x] T147 Test multi-tab toggle task sync
+- [x] T148 Test multi-tab delete task sync
 
 ### Edge Cases & Error Handling
 
