@@ -45,44 +45,6 @@ npm test && npm run lint
 
 See `STANDARDS.md` for detailed rules.
 
-## Specialized Agents
-
-### Core Development
-- **test-writer**: Write tests BEFORE code (TDD)
-- **logic-writer**: Business logic (pure functions)
-- **ui-writer**: React components (shadcn/ui, accessibility)
-- **test-runner**: Execute tests, analyze failures
-- **bugfixer**: Fix bugs systematically
-- **code-reviewer**: Review quality, standards compliance
-- **reviewer**: Validate architecture (SOLID, Flux)
-
-### Supporting
-- **refactorer**: Improve code quality (test-driven)
-- **documentation-writer**: TSDoc, README, ADRs
-
-## TDD Workflow
-
-```bash
-# 1. Write test (Red)
-test-writer agent
-
-# 2. Run test (should fail)
-test-runner agent
-
-# 3. Implement code (Green)
-logic-writer or ui-writer agent
-
-# 4. Run test (should pass)
-test-runner agent
-
-# 5. Refactor
-refactorer agent
-
-# 6. Review
-code-reviewer agent
-reviewer agent
-```
-
 ## Quality Metrics
 
 - **Coverage**: 100% goal (min 90%)
@@ -95,6 +57,12 @@ See `STANDARDS.md` for violations/patterns.
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
+
+## Git Workflow
+
+- **Main Branch**: `main_glm` - This is the target branch for all modifications
+- **Feature Branches**: Create from `main_glm`, merge back to `main_glm`
+- **Current Feature**: `001-todo-pwa-app` - TODO PWA Application
 
 ## Active Technologies
 - TypeScript 5.x (strict mode), JavaScript ES2022 + React 18+, Redux Toolkit, shadcn/ui, Tailwind CSS (001-todo-pwa-app)
