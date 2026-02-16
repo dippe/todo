@@ -25,30 +25,30 @@
 
 **Purpose**: Project initialization and basic structure per quickstart.md
 
-- [ ] T001 Initialize Vite + React + TypeScript project with create vite@latest
-- [ ] T002 [P] Install core dependencies: react-redux @reduxjs/toolkit
-- [ ] T003 [P] Install UI dependencies: shadcn/ui tailwindcss postcss autoprefixer
-- [ ] T004 [P] Install dev dependencies: @types/react-redux typescript
-- [ ] T005 Configure TypeScript strict mode in tsconfig.json per research.md section 6
-- [ ] T006 [P] Configure ESLint with functional programming rules in .eslintrc.cjs
-- [ ] T007 [P] Configure Prettier formatting in .prettierrc
-- [ ] T008 [P] Initialize Tailwind CSS with npx tailwindcss init -p
-- [ ] T009 Configure Tailwind responsive breakpoints in tailwind.config.js (768px mobile/desktop)
-- [ ] T010 [P] Install Jest dependencies: jest @testing-library/react @testing-library/jest-dom
-- [ ] T011 [P] Install testing utilities: @testing-library/user-event @types/jest jest-environment-jsdom ts-jest
-- [ ] T012 [P] Initialize Playwright for E2E tests with npm init playwright@latest
-- [ ] T013 Configure Jest in jest.config.js with 90% coverage threshold
-- [ ] T014 Create test setup file in src/setupTests.ts
-- [ ] T015 [P] Initialize shadcn/ui with npx shadcn-ui@latest init
-- [ ] T016 [P] Add shadcn Button component with npx shadcn-ui@latest add button
-- [ ] T017 [P] Add shadcn Input component with npx shadcn-ui@latest add input
-- [ ] T018 [P] Add shadcn Checkbox component with npx shadcn-ui@latest add checkbox
-- [ ] T019 [P] Add shadcn Card component with npx shadcn-ui@latest add card
-- [ ] T020 [P] Add shadcn Dialog component with npx shadcn-ui@latest add dialog
-- [ ] T021 Create project directory structure: src/{components,containers,store/slices,services,utils,types}
-- [ ] T022 Create test directory structure: tests/{unit,integration,e2e}
-- [ ] T023 Create public directory structure: public/{icons} for PWA assets
-- [ ] T024 Add package.json scripts: test, test:watch, test:coverage, test:e2e, lint, lint:fix, format
+- [X] T001 Initialize Vite + React + TypeScript project with create vite@latest
+- [X] T002 [P] Install core dependencies: react-redux @reduxjs/toolkit
+- [X] T003 [P] Install UI dependencies: shadcn/ui tailwindcss postcss autoprefixer
+- [X] T004 [P] Install dev dependencies: @types/react-redux typescript
+- [X] T005 Configure TypeScript strict mode in tsconfig.json per research.md section 6
+- [X] T006 [P] Configure ESLint with functional programming rules in .eslintrc.cjs
+- [X] T007 [P] Configure Prettier formatting in .prettierrc
+- [X] T008 [P] Initialize Tailwind CSS with npx tailwindcss init -p
+- [X] T009 Configure Tailwind responsive breakpoints in tailwind.config.js (768px mobile/desktop)
+- [X] T010 [P] Install Jest dependencies: jest @testing-library/react @testing-library/jest-dom
+- [X] T011 [P] Install testing utilities: @testing-library/user-event @types/jest jest-environment-jsdom ts-jest
+- [X] T012 [P] Initialize Playwright for E2E tests with npm init playwright@latest
+- [X] T013 Configure Jest in jest.config.js with 90% coverage threshold
+- [X] T014 Create test setup file in src/setupTests.ts
+- [X] T015 [P] Initialize shadcn/ui with npx shadcn-ui@latest init
+- [X] T016 [P] Add shadcn Button component with npx shadcn-ui@latest add button
+- [X] T017 [P] Add shadcn Input component with npx shadcn-ui@latest add input
+- [X] T018 [P] Add shadcn Checkbox component with npx shadcn-ui@latest add checkbox
+- [X] T019 [P] Add shadcn Card component with npx shadcn-ui@latest add card
+- [X] T020 [P] Add shadcn Dialog component with npx shadcn-ui@latest add dialog
+- [X] T021 Create project directory structure: src/{components,containers,store/slices,services,utils,types}
+- [X] T022 Create test directory structure: tests/{unit,integration,e2e}
+- [X] T023 Create public directory structure: public/{icons} for PWA assets
+- [X] T024 Add package.json scripts: test, test:watch, test:coverage, test:e2e, lint, lint:fix, format
 
 **Checkpoint**: Project structure initialized, dependencies installed, tooling configured
 

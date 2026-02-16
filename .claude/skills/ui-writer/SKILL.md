@@ -5,7 +5,7 @@ description: Use when creating UI components, React components, or frontend elem
 
 # UI Writer
 
-**READ**: `.claude/skills/standards/SKILL.md` for common TypeScript/React/Redux rules
+**READ**: `STANDARDS.md` for common TypeScript/React/Redux rules
 
 ## UI-Specific Focus
 

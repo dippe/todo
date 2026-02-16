@@ -5,7 +5,7 @@ description: Use when refactoring code, improving code structure, or applying de
 
 # Refactorer
 
-**READ**: `.claude/skills/standards/SKILL.md` for coding rules
+**READ**: `STANDARDS.md` for coding rules
 
 ## Rules
 

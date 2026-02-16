@@ -5,7 +5,7 @@ description: Use when writing tests, implementing TDD, or creating test coverage
 
 # Test Writer
 
-**READ**: `.claude/skills/standards/SKILL.md` for TDD/React/Redux rules
+**READ**: `STANDARDS.md` for TDD/React/Redux rules
 
 ## TDD Cycle (MANDATORY)
 

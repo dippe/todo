@@ -5,7 +5,7 @@ description: Use when reviewing code changes, pull requests, or asking for code 
 
 # Code Reviewer
 
-**READ**: `.claude/skills/standards/SKILL.md` for common rules
+**READ**: `STANDARDS.md` for common rules
 
 ## Review Checklist
 

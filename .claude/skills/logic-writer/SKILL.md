@@ -5,7 +5,7 @@ description: Use when writing business logic, domain logic, or pure functions. T
 
 # Logic Writer
 
-**READ**: `.claude/skills/standards/SKILL.md` for functional programming rules
+**READ**: `STANDARDS.md` for functional programming rules
 
 ## Pattern
 
